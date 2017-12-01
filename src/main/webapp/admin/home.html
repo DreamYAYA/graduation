@@ -1,0 +1,136 @@
+
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/base.css" />
+		<link rel="stylesheet" href="../css/home.css" />
+		<script type="text/javascript" src="../js/angular.min.js" ></script>
+		<script type="text/javascript" src="../js/angular-route.min.js" ></script>
+	
+	</head>
+	<body ng-app="myApp">
+		
+		<div > 
+			
+			<div class="logo">
+				<a>IOT</a>
+			</div>
+		<div class="home-left">
+			
+			<ul>
+				<li class="active list-item">
+					<a href="#">首页</a>
+			 
+					
+				</li>
+				
+				<li class=" list-item">
+					<a href="#">智能设备</a>
+					
+					<ul class="sub-menu-list" >
+							<li><a href="#/">设备列表</a></li>
+							<li><a href="#/devicesController">设备遥控</a></li>
+							<li><a href="#/addDevices">添加设备</a></li>
+					</ul>
+				</li>
+				
+				<li class="list-item">
+					<a href="#">数据接口</a>
+					<ul class="sub-menu-list" >
+							<li><a href="#/mathLists">接口列表</a></li>
+							<li><a href="#/addMath">添加接口</a></li>
+					</ul>
+				</li>
+						
+				<li class="list-item">
+					<a href="#">报警提示</a>
+					
+					<ul class="sub-menu-list" >
+							<li><a href="#/alertList">报警列表</a></li>
+							<li><a href="#/addAlert">添加报警</a></li>
+							<li><a href="#/timerList">定时器列表</a></li>
+							<li><a href="#/addTimer">添加定时器</a></li>
+					</ul>
+				</li>
+				
+				
+				<li class="list-item">
+					<a href="#">话题讨论</a>
+					
+				</li>
+				
+				
+				<li class="list-item">
+					<a href="#">群组功能</a>
+				</li>
+			
+			</ul>
+			
+			
+
+			
+		</div>
+		
+		<!--header start-->
+		<div class="home-header">
+			
+			<div class="toggle-btn-container">
+				
+				<a class="toggle-btn"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+				
+			</div>
+			
+			
+			<div class="input-search-container ">
+				
+	<div class="input-group">
+		
+      	<input type="text" class="form-control" placeholder="Search for...">
+     
+       <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+      
+    </div>
+			</div>
+			     
+			<div class="my-container">
+	
+				
+			</div>
+			
+		</div>
+		
+		
+		</div>
+		<!-- header end!-->
+		
+		<!-- mainContetn start-->
+		
+		<div  class="mainContent" ng-view>
+			
+		</div>
+		<!-- mainContetn end-->
+		
+		
+        <script>
+            angular.module('myApp',['ngRoute'])
+            .config(['$routeProvider', function($routeProvider){
+                $routeProvider
+                .when('/',{templateUrl:'devices/devicesList.html'})
+                .when('/devicesController',{templateUrl:'devices/devicesController.html'})
+                .when('/addDevices',{templateUrl:'devices/addDevices.html'})
+                .when('/alertList',{templateUrl:'timers/alertList.html'})
+                .when('/addAlert',{templateUrl:'timers/addAlert.html'})
+                .when('/timerList',{templateUrl:'timers/TimerList.html'})
+                .when('/addTimer',{templateUrl:'timers/addTimer.html'})
+                .when('/mathLists',{templateUrl:'mathInterface/mathtList.html'})
+                .when('/addMath',{templateUrl:'mathInterface/addMath.html'})
+                .otherwise({redirectTo:'/'});
+            }]);
+        </script>
+		
+	</body>
+</html>

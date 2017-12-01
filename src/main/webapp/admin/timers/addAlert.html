@@ -1,0 +1,86 @@
+ <div class="control-header">
+ 	
+<h3> 添加报警提示 <small> Add Alert </small></h3>
+ 	
+ 	<div class="content-wrapper .container">
+ 				
+ 	<form>
+   <div class="form-group">
+    <label for="exampleInputEmail1" style="font-weight: normal;">报警名称</label>
+    <input type="email" class="form-control" id="exampleInputEmail1">
+  </div>
+ 		
+  <div class="checkbox">
+    <label>
+      <input type="checkbox"> 是否启用
+    </label>
+  </div>
+  
+    <div class="form-group">
+    	数据来源（定位和图片接口无法报警）：
+<select class="form-control">
+  <option>开</option>
+  <option>关</option>
+</select>
+   </div>
+  
+  
+报警条件：(x - 来自接口数据)
+  <div class="row">
+  	
+<div class="col-md-3">
+ <select class="form-control">
+  <option>&gt;</option>
+  <option>=</option>
+  <option>&lt;</option>
+  <option>&gt;=</option>
+  <option>&lt;=</option>
+  <option>!=</option>
+</select>
+
+  </div>
+  
+  <div class="col-md-3">
+  	<input class="form-control" type="text" placeholder="Default input"/>
+  </div>
+ 
+ <div class="col-md-3">
+ <select class="form-control">
+  <option>无</option>
+  <option>and</option>
+  <option>or</option>
+</select>  	
+  </div>
+
+</div>
+
+ <div class="form-group">
+    发送方式  ：
+<select class="form-control">
+  <option>邮件</option>
+  <option>QQ微博</option>
+  <option>新浪微博</option>
+</select>
+   </div>
+   
+   
+  <div class="row alert-bt">
+  	
+  	<!-- Standard button -->
+<button type="button" class="btn btn-success col-md-3">确定</button>
+
+<!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+<button type="button" class="btn btn-danger col-md-3">重置</button>
+  	
+  	
+  </div> 
+   
+   
+ 
+ 	</form>
+ 							
+ 	</div>
+ 	
+	
+ </div>
+ 
