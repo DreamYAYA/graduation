@@ -7,7 +7,9 @@ import com.lql.graduation.util.ResponseCode;
 import com.lql.graduation.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 @RequestMapping("/device")
@@ -16,7 +18,8 @@ public class DeviceController {
     @Autowired
     private DeviceService deviceService;
 
-
+       @RequestMapping("/creatDevice")
+       @ResponseBody
        public ServerResponse addDevice(Device device,String Uid){
 
            Integer resultCode = deviceService.addDevice(device,Uid);
@@ -26,6 +29,9 @@ public class DeviceController {
            }else{
                return  ServerResponse.createByErrorMessage("添加设备失败");
            }
+
        }
+
+
 
 }
