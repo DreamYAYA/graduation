@@ -1,5 +1,7 @@
 package com.lql.graduation.service.serviceImpl;
 
+import com.aliyuncs.iot.model.v20170420.RegistDeviceResponse;
+import com.lql.graduation.common.ali.aliDevice;
 import com.lql.graduation.mapper.DeviceMapper;
 import com.lql.graduation.pojo.Device;
 import com.lql.graduation.service.DeviceService;
@@ -8,10 +10,8 @@ import com.lql.graduation.util.ResponseCode;
 import com.lql.graduation.util.UidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-
-import java.rmi.server.UID;
 import java.util.Date;
-import java.util.UUID;
+import java.util.List;
 
 @Repository
 public class DeviceServiceImpl implements DeviceService{
@@ -41,14 +41,35 @@ public class DeviceServiceImpl implements DeviceService{
         device.setDeviceIsonline(Constant.Device.DEVICE_OFF);
 
         try {
-            deviceMapper.insert(device);
-           return ResponseCode.SUCCESS.getCode();
+            aliDevice aDevice = new aliDevice();
+            RegistDeviceResponse resp = aDevice.CreateDeviceInIot(device.getDeviceName());
+            if(resp.getSuccess()){
+                device.setApikey(resp.getDeviceId());
+                device.setApiscreat(resp.getDeviceSecret());
+                deviceMapper.insert(device);
+
+                return ResponseCode.SUCCESS.getCode();
+                }else{
+                throw new RuntimeException(resp.getErrorMessage());
+            }
         }catch (Exception e){
             e.printStackTrace();
             return ResponseCode.ERROR.getCode();
         }
     }
 
+
+    /**
+     *
+     * 设备列表
+     * @return
+     */
+    @Override
+    public List<Device> deviceList() {
+
+        List<Device> devices = deviceMapper.selectByStatus();
+        return devices;
+    }
 
 
 }
