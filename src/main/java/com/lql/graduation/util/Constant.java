@@ -13,6 +13,17 @@ public interface  Device{
     Integer DEVICE_OFF = 0;
 }
 
+public interface aliDevice{
+
+    //产品的ID名称
+    String PRODUCT_KEY = "jqLf0X9GFja";
+    String ACCESS_KEY = "LTAInnUiYQ9Ty7Yk";
+    String ACCESS_SCREAT = "zevYTuE0hjyLp9oqUmmIJ6r7Hb2W3F";
+
+
+
+}
+
 
 
 
