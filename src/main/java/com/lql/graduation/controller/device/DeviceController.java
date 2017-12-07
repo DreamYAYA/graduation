@@ -11,6 +11,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/device")
 public class DeviceController {
@@ -25,11 +27,18 @@ public class DeviceController {
            Integer resultCode = deviceService.addDevice(device,Uid);
 
            if(resultCode== ResponseCode.SUCCESS.getCode()){
-                    return ServerResponse.createBySuccessMessage("添加设备成功");
+               return ServerResponse.createBySuccessMessage("添加设备成功");
            }else{
                return  ServerResponse.createByErrorMessage("添加设备失败");
            }
 
+       }
+
+        @RequestMapping("/deviceList")
+        @ResponseBody
+       public ServerResponse DeviceList(){
+           List<Device> deviceList = deviceService.deviceList();
+           return ServerResponse.createBySuccessMessage("查询成功",deviceList);
        }
 
 
