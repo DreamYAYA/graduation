@@ -3,6 +3,8 @@ package com.lql.graduation.mapper;
 import com.lql.graduation.pojo.Device;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DeviceMapper {
     /**
@@ -52,4 +54,6 @@ public interface DeviceMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(Device record);
+
+    List<Device> selectByStatus();
 }
