@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.lql.graduation.mapper.DeviceInterfaceDataMapper">
+  <resultMap id="BaseResultMap" type="com.lql.graduation.pojo.DeviceInterfaceData">
+    <id column="DATA_ID" jdbcType="VARCHAR" property="dataId" />
+    <result column="DEVICE_INTERFACE_ID" jdbcType="VARCHAR" property="deviceInterfaceId" />
+    <result column="DEVICE_INERFACE_DATA" jdbcType="VARCHAR" property="deviceInerfaceData" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    DATA_ID, DEVICE_INTERFACE_ID, DEVICE_INERFACE_DATA
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from DEVICE_INTERFACE_DATA
+    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+    delete from DEVICE_INTERFACE_DATA
+    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+  </delete>
+  <insert id="insert" parameterType="com.lql.graduation.pojo.DeviceInterfaceData">
+    insert into DEVICE_INTERFACE_DATA (DATA_ID, DEVICE_INTERFACE_ID, DEVICE_INERFACE_DATA
+      )
+    values (#{dataId,jdbcType=VARCHAR}, #{deviceInterfaceId,jdbcType=VARCHAR}, #{deviceInerfaceData,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.lql.graduation.pojo.DeviceInterfaceData">
+    insert into DEVICE_INTERFACE_DATA
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="dataId != null">
+        DATA_ID,
+      </if>
+      <if test="deviceInterfaceId != null">
+        DEVICE_INTERFACE_ID,
+      </if>
+      <if test="deviceInerfaceData != null">
+        DEVICE_INERFACE_DATA,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="dataId != null">
+        #{dataId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInterfaceId != null">
+        #{deviceInterfaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInerfaceData != null">
+        #{deviceInerfaceData,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.lql.graduation.pojo.DeviceInterfaceData">
+    update DEVICE_INTERFACE_DATA
+    <set>
+      <if test="deviceInterfaceId != null">
+        DEVICE_INTERFACE_ID = #{deviceInterfaceId,jdbcType=VARCHAR},
+      </if>
+      <if test="deviceInerfaceData != null">
+        DEVICE_INERFACE_DATA = #{deviceInerfaceData,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.lql.graduation.pojo.DeviceInterfaceData">
+    update DEVICE_INTERFACE_DATA
+    set DEVICE_INTERFACE_ID = #{deviceInterfaceId,jdbcType=VARCHAR},
+      DEVICE_INERFACE_DATA = #{deviceInerfaceData,jdbcType=VARCHAR}
+    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+  </update>
+</mapper>

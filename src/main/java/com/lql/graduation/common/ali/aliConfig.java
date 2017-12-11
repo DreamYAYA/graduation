@@ -17,14 +17,18 @@ public class aliConfig {
         account = new CloudAccount(
                 accessKeyId,
                 accessKeySecret,
-                accountEndpoint);
+                accountEndpoint
+        );
     }
 
-
-    private void ReceiverQueMessage(){
+    /**
+     *
+     * 从指定的队列中接收消息
+     */
+    public void ReceiverQueMessage(){
 
         MNSClient client = account.getMNSClient();
-        CloudQueue queue = client.getQueueRef("aliyun-iot-11111111111"); //参数请输入IoT自动创建的队列名称，例如上面截图中的aliyun-iot-3AbL0062osF
+        CloudQueue queue = client.getQueueRef("aliyun-iot-jqLf0X9GFja"); //参数请输入IoT自动创建的队列名称，例如上面截图中的aliyun-iot-3AbL0062osF
         while (true) {
             // 获取消息
             Message popMsg = queue.popMessage(10); //长轮询等待时间为10秒
@@ -39,4 +43,18 @@ public class aliConfig {
 
 
     }
+
+    /**
+     *
+     * 从指定的队列中接收消息,设备的上线下线消息默认发往默认创建的队列中
+     */
+    public CloudQueue getQue(String queName){
+        MNSClient client = account.getMNSClient();
+        CloudQueue queue = client.getQueueRef(queName); //参数请输入IoT自动创建的队列名称，例如上面截图中的aliyun-iot-3AbL0062osF
+
+        return queue;
+    }
+
+
+
 }

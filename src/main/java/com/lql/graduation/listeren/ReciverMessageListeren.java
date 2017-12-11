@@ -4,10 +4,14 @@ import com.aliyun.mns.client.CloudQueue;
 import com.aliyun.mns.common.ServiceException;
 import com.aliyun.mns.model.Message;
 import com.lql.graduation.common.ali.aliConfig;
+import com.lql.graduation.pojo.DeviceInterfaceData;
 import com.lql.graduation.pojo.Message.DataBean;
+import com.lql.graduation.pojo.Message.DeviceData;
+import com.lql.graduation.service.DeviceInterfaceDataService;
 import com.lql.graduation.service.DeviceService;
 import com.lql.graduation.util.Constant;
 import com.lql.graduation.util.JsonUtil;
+import com.lql.graduation.util.UidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletContextEvent;
@@ -26,6 +30,8 @@ private static final String MESSSAGE_TYPE_UPLOAD = "upload";
 
 @Autowired
 private DeviceService deviceService;
+@Autowired
+private DeviceInterfaceDataService deviceInterfaceDataService;
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
@@ -42,23 +48,24 @@ private DeviceService deviceService;
                     String playload =(String)rowMap.get("playload"); //获取设备消息
 
                     if(MESSAGE_TYPE_STATUS.equals(messagetype)){
-                        //是设备的通知数据
+                        //是设备的通知数据(上下线的消息)
                         DataBean deviceData = new DataBean();
-                        DataBean dataBean = (DataBean)JsonUtil.JsonToObject(playload, DataBean.class);
+                        deviceData = (DataBean)JsonUtil.JsonToObject(playload, DataBean.class);
                         deviceService.updateDevice(deviceData);//更新设备的状态
 
                     }else if(MESSSAGE_TYPE_UPLOAD.equals(messagetype)){
                         //是设备的发送的消息
+                        DeviceData deviceData = new DeviceData();
+                        deviceData = (DeviceData)JsonUtil.JsonToObject(playload, DataBean.class);
 
+                        DeviceInterfaceData deviceInterfaceData = new DeviceInterfaceData();
+                        deviceInterfaceData.setDataId(UidUtils.getUid());
+                        deviceInterfaceData.setDeviceInterfaceId(deviceData.getInterfaces());
+                        deviceInterfaceData.setDeviceInerfaceData(deviceData.getMessage());
 
-
-
+                        deviceInterfaceDataService.insertInterfaceData(deviceInterfaceData);
 
                     }
-
-
-
-
 
                 } catch (IOException e) {
                     e.printStackTrace();
