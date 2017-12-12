@@ -13,6 +13,8 @@ import com.lql.graduation.util.Constant;
 import com.lql.graduation.util.JsonUtil;
 import com.lql.graduation.util.UidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.Base64Utils;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
@@ -45,18 +47,20 @@ private DeviceInterfaceDataService deviceInterfaceDataService;
                 try {
                     Map rowMap = JsonUtil.JsonToMap(rowMessage);
                     String messagetype = (String)rowMap.get("messagetype");//获取消息类型：1.是设备的发送的消息,2，是设备上下线的消息
-                    String playload =(String)rowMap.get("playload"); //获取设备消息
-
+                    String playload =(String)rowMap.get("payload"); //获取设备消息
+                    System.out.println(messagetype+":"+playload);
                     if(MESSAGE_TYPE_STATUS.equals(messagetype)){
                         //是设备的通知数据(上下线的消息)
+                        deviceService = getService(servletContextEvent,DeviceService.class);
                         DataBean deviceData = new DataBean();
-                        deviceData = (DataBean)JsonUtil.JsonToObject(playload, DataBean.class);
+                        deviceData = (DataBean)JsonUtil.JsonToObject(new String(Base64Utils.decodeFromString(playload),"utf-8"), DataBean.class);
                         deviceService.updateDevice(deviceData);//更新设备的状态
 
                     }else if(MESSSAGE_TYPE_UPLOAD.equals(messagetype)){
                         //是设备的发送的消息
+                        deviceInterfaceDataService = getService(servletContextEvent,DeviceInterfaceDataService.class);
                         DeviceData deviceData = new DeviceData();
-                        deviceData = (DeviceData)JsonUtil.JsonToObject(playload, DataBean.class);
+                        deviceData = (DeviceData)JsonUtil.JsonToObject(new String(Base64Utils.decodeFromString(playload),"utf-8"), DeviceData.class);
 
                         DeviceInterfaceData deviceInterfaceData = new DeviceInterfaceData();
                         deviceInterfaceData.setDataId(UidUtils.getUid());
@@ -80,6 +84,11 @@ private DeviceInterfaceDataService deviceInterfaceDataService;
 
     }
 
+    private <T> T getService(ServletContextEvent sce,Class<T> clazz){
+        T obj = WebApplicationContextUtils.getWebApplicationContext(sce.getServletContext()).getBean(clazz);
+
+        return obj;
+    }
     @Override
     public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
