@@ -226,5 +226,12 @@
     from DEVICE
   </select>
 
+  <select id="findDeviceByName" resultMap="BaseResultMap" parameterType="string">
+
+    select
+    <include refid="Base_Column_List" />
+    from DEVICE WHERE DEVICE_NAME=#{deviceName}
+  </select>
+
 
 </mapper>
