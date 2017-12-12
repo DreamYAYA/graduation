@@ -4,6 +4,7 @@ import com.lql.graduation.mapper.DeviceInterfaceDataMapper;
 import com.lql.graduation.pojo.DeviceInterfaceData;
 import com.lql.graduation.service.DeviceInterfaceDataService;
 import com.lql.graduation.service.DeviceInterfaceService;
+import com.lql.graduation.util.ResponseCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,8 @@ public class DeviceInterfaceDataServiceImpl implements DeviceInterfaceDataServic
     @Override
     public Integer insertInterfaceData(DeviceInterfaceData deviceInterfaceData) {
 
-        return null;
+        deviceInterfaceDataMapper.insert(deviceInterfaceData);
+        return ResponseCode.SUCCESS.getCode();
     }
 
 

@@ -8,11 +8,10 @@ import com.lql.graduation.pojo.Message.DataBean;
 import com.lql.graduation.service.DeviceService;
 import com.lql.graduation.util.Constant;
 import com.lql.graduation.util.ResponseCode;
+import com.lql.graduation.util.TimeUtil;
 import com.lql.graduation.util.UidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
-
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +19,10 @@ import java.util.List;
 public class DeviceServiceImpl implements DeviceService{
 
     @Autowired
-   private DeviceMapper deviceMapper;
+    private DeviceMapper deviceMapper;
+    private final static String DEVICE_ONLINE = "online";
+    private final static String DEVICE_OFFLINE = "offline";
+
 
     /**
      *
@@ -82,9 +84,28 @@ public class DeviceServiceImpl implements DeviceService{
      */
     @Override
     public Integer updateDevice(DataBean deviceData) {
+        String deviceName = deviceData.getDeviceName();
+        Device device = deviceMapper.findDeviceByName(deviceName);
+
+        if(DEVICE_ONLINE.equals(deviceData.getStatus())){
+            //设备在线更改设备状态，更新设备的登录时间
+            device.setDeviceStatue(Constant.Device.DEVICE_ONLINE);
+            device.setUpdateTime(new Date());
+        }else if(DEVICE_OFFLINE.equals(deviceData.getStatus())){
+            //设备下线更改设备状态，计算设备的在线时间
+            device.setDeviceStatue(Constant.Device.DEVICE_OFF);
+            Date CurrentData = new Date();
+            Date OldData = device.getUpdateTime();
+            final long onlineTime = CurrentData.getTime() - OldData.getTime();
+            Integer minuetime = TimeUtil.millTimeToMinue(onlineTime);
+            device.setDeviceTime(device.getDeviceTime()+minuetime);
+        }
 
 
-        return null;
+        deviceMapper.updateByPrimaryKeySelective(device);
+
+
+        return ResponseCode.SUCCESS.getCode();
     }
 
 
