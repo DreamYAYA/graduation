@@ -10,10 +10,6 @@ import java.util.Map;
 public class JsonUtil {
 
 
-
-
-
-
     public static Object  JsonToObject(String jsonStr,Class obj) throws IOException {
 
         ObjectMapper mapper = new ObjectMapper();
@@ -28,9 +24,5 @@ public class JsonUtil {
         resMap = mapper.readValue(jsonStr, Map.class);
         return resMap;
     }
-
-
-
-
 
 }
