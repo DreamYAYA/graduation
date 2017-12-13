@@ -12,6 +12,7 @@ import com.lql.graduation.mapper.UserMapper;
 import com.lql.graduation.pojo.Message.DataBean;
 import com.lql.graduation.pojo.User;
 import com.lql.graduation.spring.config.GraduationApplication;
+import com.lql.graduation.util.JsonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,6 +95,15 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 
 
 		}
+	@Test
+          public void testJson() throws IOException {
+
+		String payload = "{\"lastTime\":\"2017-12-12 10:10:56.757\",\"clientIp\":\"27.17.164.37\",\"time\":\"2017-12-12 10:10:56.772\",\"productKey\":\"jqLf0X9GFja\",\"deviceName\":\"device3\",\"status\":\"online\"}";
+			  DataBean deviceData = new DataBean();
+			  deviceData = (DataBean)JsonUtil.JsonToObject(payload, DataBean.class);
+
+			  System.out.println(deviceData);
 
 
+	}
 }

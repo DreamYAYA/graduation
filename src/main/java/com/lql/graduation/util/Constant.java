@@ -25,6 +25,17 @@ public interface aliDevice{
 
 }
 
+//设备状态
+public interface Status{
+
+    //可用状态
+  Integer OK_STATUS = 1;
+  //弃用状态
+  Integer ERROR_STATUS = 0;
+
+
+}
+
 
 
 

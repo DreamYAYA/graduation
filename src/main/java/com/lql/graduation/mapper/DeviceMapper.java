@@ -56,4 +56,6 @@ public interface DeviceMapper {
     int updateByPrimaryKey(Device record);
 
     List<Device> selectByStatus();
+
+    Device findDeviceByName(String deviceName);
 }

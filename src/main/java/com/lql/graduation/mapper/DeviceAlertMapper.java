@@ -3,6 +3,8 @@ package com.lql.graduation.mapper;
 import com.lql.graduation.pojo.DeviceAlert;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DeviceAlertMapper {
     /**
@@ -52,4 +54,6 @@ public interface DeviceAlertMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(DeviceAlert record);
+
+    List<DeviceAlert> queryDeviceAlertListByStatus(Integer status);
 }
