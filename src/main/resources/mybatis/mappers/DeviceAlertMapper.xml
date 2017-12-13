@@ -182,4 +182,18 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where DEVICE_ALERT_ID = #{deviceAlertId,jdbcType=VARCHAR}
   </update>
+  
+  
+  <select id="queryDeviceAlertListByStatus" parameterType="int" resultMap="BaseResultMap">
+
+    select
+    <include refid="Base_Column_List" />
+    from DEVICE_ALERT
+    where DEVICE_ALERT_STATUS = #{status}
+
+  </select>
+
+
+
+
 </mapper>
