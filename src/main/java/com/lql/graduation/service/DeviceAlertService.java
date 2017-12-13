@@ -11,6 +11,8 @@ public interface DeviceAlertService {
 
 
     List<DeviceAlert> showDeviceAlertListByStatus(Integer status);
+
+    List<DeviceAlert> queryDeviceAlertListByInterId(String deviceInerfaceData);
 }
 
 

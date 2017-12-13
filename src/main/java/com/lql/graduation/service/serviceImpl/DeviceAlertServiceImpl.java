@@ -32,5 +32,21 @@ public class DeviceAlertServiceImpl implements DeviceAlertService{
             return deviceAlertList;
     }
 
+    /**
+     *
+     * 根据接口ID查询报警列表
+     * @param deviceInerfaceData
+     * @return
+     */
+    @Override
+    public List<DeviceAlert> queryDeviceAlertListByInterId(String deviceInerfaceData) {
+
+
+
+        List<DeviceAlert> deviceAlertList = deviceAlertMapper.queryDeviceAlertListByInterId(deviceInerfaceData);
+
+        return deviceAlertList;
+    }
+
 
 }
