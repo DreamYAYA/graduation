@@ -6,17 +6,27 @@ import com.aliyun.mns.model.Message;
 import com.aliyuncs.exceptions.ClientException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.lql.graduation.common.Mail;
+import com.lql.graduation.common.ScheduleQuartz;
 import com.lql.graduation.common.ali.aliConfig;
 import com.lql.graduation.common.ali.aliDevice;
 import com.lql.graduation.mapper.UserMapper;
 import com.lql.graduation.pojo.Message.DataBean;
+import com.lql.graduation.pojo.Scheduler.MyJob1;
+import com.lql.graduation.pojo.Scheduler.ScheduleJob;
 import com.lql.graduation.pojo.User;
 import com.lql.graduation.spring.config.GraduationApplication;
 import com.lql.graduation.util.JsonUtil;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.SchedulerFactory;
+import org.quartz.impl.StdSchedulerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Base64Utils;
 
@@ -28,8 +38,20 @@ import java.util.Base64;
 @SpringBootTest(classes = GraduationApplication.class)
 public class GraduationApplicationTests {
 
-     @Autowired
+	@Autowired
 	public UserMapper userMapper;
+	@Autowired
+	private JavaMailSender mailSender;
+
+	@Autowired
+	private ScheduleQuartz scheduleQuartz;
+
+	@Autowired
+	private Mail mail;
+
+	@Autowired
+	private ScheduleQuartz quartzManager;
+
 
 	@Test
 	public void contextLoads() {
@@ -106,4 +128,58 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 
 
 	}
+
+	@Test
+	public void sendSimplMail(){
+
+		for (int i=0;i<10;i++){
+			SimpleMailMessage message = new SimpleMailMessage();
+			message.setFrom("836957413@qq.com");//发送者.
+			message.setTo("1391228420@qq.com");//接收者.
+			message.setSubject("测试邮件（邮件主题）");//邮件主题.
+			message.setText("这是邮件内容");//邮件内容.
+			mailSender.send(message);//发送邮件
+		}
+
+	}
+
+	@Test
+	public void mail(){
+		mail.sendSimplMail("1391228420@qq.com","测试邮件（邮件主题","这是邮件内容");
+	}
+
+
+	@Test
+	public void quartz() {
+
+	}
+
+	@Test
+	public void test() throws SchedulerException {
+
+		try {
+			System.out.println("【系统启动】开始(每1秒输出一次 job2)...");
+
+			Thread.sleep(5000);
+			System.out.println("【增加job1启动】开始(每1秒输出一次)...");
+			quartzManager.addJob("test", "test", "test", "test", MyJob1.class, "0/1 * * * * ?");
+
+			Thread.sleep(5000);
+			System.out.println("【修改job1时间】开始(每2秒输出一次)...");
+			quartzManager.modifyJobTime("test", "test", "test", "test", "0/2 * * * * ?");
+
+			Thread.sleep(10000);
+			System.out.println("【移除job1定时】开始...");
+			quartzManager.removeJob("test", "test", "test", "test");
+
+			// 关掉任务调度容器
+			// quartzManager.shutdownJobs();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+
+
 }

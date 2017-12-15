@@ -1,13 +1,12 @@
 package com.lql.graduation.spring.config;
 import com.jolbox.bonecp.BoneCPDataSource;
+import org.quartz.Trigger;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.PropertySource;
+import org.springframework.context.annotation.*;
+import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
 import javax.sql.DataSource;
 
@@ -53,6 +52,7 @@ public class GraduationApplication extends SpringBootServletInitializer{
         boneCPDataSource.setMinConnectionsPerPartition(5);
         return boneCPDataSource;
     }
+
 
 
 
