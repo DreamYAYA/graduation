@@ -229,4 +229,24 @@
       UPDATE_TIMER = #{updateTimer,jdbcType=TIMESTAMP}
     where DEVICE_TIMER_ID = #{deviceTimerId,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="queryDeviceTimerByStatus" parameterType="int" resultMap="BaseResultMap">
+
+    select
+    <include refid="Base_Column_List" />
+    from DEVICE_TIMER
+    <where>
+
+      <if test="status!=null">
+        DEVICE_TIMER_STATUS = #{status,jdbcType=INTEGER}
+      </if>
+    </where>
+
+  </select>
+
+
+
+
+
 </mapper>

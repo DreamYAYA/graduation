@@ -3,6 +3,8 @@ package com.lql.graduation.mapper;
 import com.lql.graduation.pojo.DeviceTimer;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface DeviceTimerMapper {
     /**
@@ -52,4 +54,6 @@ public interface DeviceTimerMapper {
      * @mbg.generated
      */
     int updateByPrimaryKey(DeviceTimer record);
+
+    List<DeviceTimer> queryDeviceTimerByStatus(Integer status);
 }

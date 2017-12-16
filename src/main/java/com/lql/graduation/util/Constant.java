@@ -29,9 +29,11 @@ public interface aliDevice{
 public interface Status{
 
     //可用状态
-  Integer OK_STATUS = 1;
+    Integer OK_STATUS = 1;
   //弃用状态
-  Integer ERROR_STATUS = 0;
+    Integer ERROR_STATUS = 0;
+  //删除状态
+    Integer DELETE_STATUS = 3;
 
 
 }
