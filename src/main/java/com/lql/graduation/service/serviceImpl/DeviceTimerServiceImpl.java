@@ -36,6 +36,9 @@ public class DeviceTimerServiceImpl implements DeviceTimerService{
 
         deviceTimerMapper.insert(deviceTimer);
 
+        //动态的添加定时的任务
+
+
     }
 
     public List<DeviceTimer> DeviceTimerListByStatus(Integer status){
