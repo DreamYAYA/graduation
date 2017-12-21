@@ -1,18 +1,11 @@
 package com.lql.graduation.common;
-
-import com.lql.graduation.pojo.Scheduler.ScheduleJob;
 import org.quartz.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ScheduleQuartz {
 
     private Scheduler scheduler;
-
-
-
 
     /**
      * @Description: 添加一个定时任务
@@ -26,11 +19,11 @@ public class ScheduleQuartz {
      */
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void addJob(String jobName, String jobGroupName,
-                       String triggerName, String triggerGroupName, Class jobClass, String cron) {
+                       String triggerName, String triggerGroupName, Class jobClass, String cron,String timerId) {
         try {
             // 任务名，任务组，任务执行类
             JobDetail jobDetail= JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).build();
-
+            jobDetail.getJobDataMap().put("timerId", timerId);
             // 触发器
             TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();
             // 触发器名,触发器组
@@ -52,6 +45,7 @@ public class ScheduleQuartz {
             throw new RuntimeException(e);
         }
     }
+
 
     /**
      * @Description: 修改一个任务的触发时间

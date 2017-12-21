@@ -12,8 +12,9 @@ import com.lql.graduation.common.ali.aliConfig;
 import com.lql.graduation.common.ali.aliDevice;
 import com.lql.graduation.mapper.UserMapper;
 import com.lql.graduation.pojo.Message.DataBean;
-import com.lql.graduation.pojo.Scheduler.MyJob1;
+
 import com.lql.graduation.pojo.Scheduler.ScheduleJob;
+import com.lql.graduation.pojo.Scheduler.TimerJob;
 import com.lql.graduation.pojo.User;
 import com.lql.graduation.spring.config.GraduationApplication;
 import com.lql.graduation.util.JsonUtil;
@@ -23,6 +24,7 @@ import org.quartz.Scheduler;
 import org.quartz.SchedulerException;
 import org.quartz.SchedulerFactory;
 import org.quartz.impl.StdSchedulerFactory;
+import org.quartz.impl.triggers.CronTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.mail.SimpleMailMessage;
@@ -33,6 +35,7 @@ import org.springframework.util.Base64Utils;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Base64;
+import java.util.Date;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes = GraduationApplication.class)
@@ -162,7 +165,7 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 
 			Thread.sleep(5000);
 			System.out.println("【增加job1启动】开始(每1秒输出一次)...");
-			quartzManager.addJob("test", "test", "test", "test", MyJob1.class, "0/1 * * * * ?");
+			quartzManager.addJob("test", "test", "test", "test", TimerJob.class, "0/1 * * * * ?","12");
 
 			Thread.sleep(5000);
 			System.out.println("【修改job1时间】开始(每2秒输出一次)...");
@@ -180,6 +183,25 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 
 	}
 
+	@Test
+	public void testCronException(){
 
+		boolean validExpression = isValidExpression("0 10 14 ? * 2 ");
+		System.out.println(validExpression);
+
+	}
+
+
+	public static boolean isValidExpression(final String cronExpression){
+		CronTriggerImpl trigger = new CronTriggerImpl();
+		try {
+			trigger.setCronExpression(cronExpression);
+			Date date = trigger.computeFirstFireTime(null);
+			return date != null && date.after(new Date());
+		} catch (Exception e) {
+			System.out.println("[TaskUtils.isValidExpression]:failed. throw ex:");
+		}
+		return false;
+	}
 
 }

@@ -1,7 +1,9 @@
 package com.lql.graduation.service.serviceImpl;
 
+import com.lql.graduation.common.ScheduleQuartz;
 import com.lql.graduation.mapper.DeviceTimerMapper;
 import com.lql.graduation.pojo.DeviceTimer;
+import com.lql.graduation.pojo.Scheduler.TimerJob;
 import com.lql.graduation.service.DeviceTimerService;
 import com.lql.graduation.util.Constant;
 import com.lql.graduation.util.UidUtils;
@@ -18,6 +20,10 @@ public class DeviceTimerServiceImpl implements DeviceTimerService{
     @Autowired
     private DeviceTimerMapper deviceTimerMapper;
 
+    @Autowired
+    private ScheduleQuartz quartzManager;
+
+
     /**
      *
      * 创建设备的定时器
@@ -27,16 +33,16 @@ public class DeviceTimerServiceImpl implements DeviceTimerService{
     public void createDeviceTimer(DeviceTimer deviceTimer) {
 
         String timerId = UidUtils.getUid();
+        String deviceTimerName = deviceTimer.getDeviceTimerName();
         deviceTimer.setDeviceTimerId(timerId);
-
         //设置创建时间
         deviceTimer.setCreateTime(new Date());
         //设置默认启用
         deviceTimer.setDeviceTimerStatus(Constant.Status.OK_STATUS);
-
         deviceTimerMapper.insert(deviceTimer);
 
         //动态的添加定时的任务
+        quartzManager.addJob(deviceTimerName, deviceTimerName, deviceTimerName, deviceTimerName, TimerJob.class, "0 "+deviceTimer.getDeviceTimerMiner()+" " +deviceTimer.getDeviceTiemrHour()+" " +"? "+"* "+deviceTimer.getDeviceTiemrWeek()+" ",timerId);
 
 
     }
