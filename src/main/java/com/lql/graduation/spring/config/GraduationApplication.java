@@ -13,6 +13,7 @@ import javax.sql.DataSource;
 
 @Configuration
 @PropertySource(value = {"classpath:jdbc.properties"})
+@ImportResource(value = {"classpath:logback.xml"})
 @ComponentScan(basePackages="com.lql.graduation")
 @SpringBootApplication
 public class GraduationApplication extends SpringBootServletInitializer{

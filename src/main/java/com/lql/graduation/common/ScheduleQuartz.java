@@ -1,10 +1,12 @@
 package com.lql.graduation.common;
 import org.quartz.*;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ScheduleQuartz {
 
+    @Autowired
     private Scheduler scheduler;
 
     /**

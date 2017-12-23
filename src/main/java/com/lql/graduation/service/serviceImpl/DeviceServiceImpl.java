@@ -108,5 +108,18 @@ public class DeviceServiceImpl implements DeviceService{
         return ResponseCode.SUCCESS.getCode();
     }
 
+    /**
+     * 根据Id查找设备
+     *
+     * @param deviceId
+     * @return
+     */
+    @Override
+    public Device findDeviceById(String deviceId) {
+
+        Device device = deviceMapper.selectByPrimaryKey(deviceId);
+        return device;
+    }
+
 
 }

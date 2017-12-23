@@ -10,7 +10,7 @@ import org.springframework.scheduling.quartz.CronTriggerFactoryBean;
 import org.springframework.scheduling.quartz.MethodInvokingJobDetailFactoryBean;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
 
-
+@Configuration
 public class SchedledConfiguration {
 
 
@@ -50,9 +50,9 @@ public class SchedledConfiguration {
     public SchedulerFactoryBean schedulerFactoryBean(Trigger jobTrigger) {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
 //        // 用于quartz集群,QuartzScheduler 启动时更新己存在的Job
-//        bean.setOverwriteExistingJobs(true);
+       bean.setOverwriteExistingJobs(true);
 //        // 延时启动，应用启动1秒后
-//        bean.setStartupDelay(1);
+        bean.setStartupDelay(1);
 //        // 注册触发器
         bean.setTriggers(jobTrigger);
         return bean;

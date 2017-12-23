@@ -58,4 +58,6 @@ public interface DeviceMapper {
     List<Device> selectByStatus();
 
     Device findDeviceByName(String deviceName);
+
+
 }

@@ -13,4 +13,6 @@ public interface DeviceService {
     List<Device> deviceList();
 
     Integer updateDevice(DataBean deviceData);
+
+    Device findDeviceById(String deviceId);
 }

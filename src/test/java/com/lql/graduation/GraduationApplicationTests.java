@@ -16,6 +16,7 @@ import com.lql.graduation.pojo.Message.DataBean;
 import com.lql.graduation.pojo.Scheduler.ScheduleJob;
 import com.lql.graduation.pojo.Scheduler.TimerJob;
 import com.lql.graduation.pojo.User;
+import com.lql.graduation.service.SendMessageService;
 import com.lql.graduation.spring.config.GraduationApplication;
 import com.lql.graduation.util.JsonUtil;
 import org.junit.Test;
@@ -47,13 +48,13 @@ public class GraduationApplicationTests {
 	private JavaMailSender mailSender;
 
 	@Autowired
-	private ScheduleQuartz scheduleQuartz;
-
-	@Autowired
 	private Mail mail;
 
 	@Autowired
 	private ScheduleQuartz quartzManager;
+
+	@Autowired
+	private SendMessageService sendMessageService;
 
 
 	@Test
@@ -165,18 +166,14 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 
 			Thread.sleep(5000);
 			System.out.println("【增加job1启动】开始(每1秒输出一次)...");
-			quartzManager.addJob("test", "test", "test", "test", TimerJob.class, "0/1 * * * * ?","12");
+			quartzManager.addJob("test", "test", "test", "test", TimerJob.class, "0 15 10 ? * 6 ","12");
 
-			Thread.sleep(5000);
-			System.out.println("【修改job1时间】开始(每2秒输出一次)...");
-			quartzManager.modifyJobTime("test", "test", "test", "test", "0/2 * * * * ?");
-
-			Thread.sleep(10000);
-			System.out.println("【移除job1定时】开始...");
-			quartzManager.removeJob("test", "test", "test", "test");
+//			Thread.sleep(10000);
+//			System.out.println("【移除job1定时】开始...");
+//			quartzManager.removeJob("test", "test", "test", "test");
 
 			// 关掉任务调度容器
-			// quartzManager.shutdownJobs();
+			 //quartzManager.shutdownJobs();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -186,7 +183,7 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 	@Test
 	public void testCronException(){
 
-		boolean validExpression = isValidExpression("0 10 14 ? * 2 ");
+		boolean validExpression = isValidExpression("0 25 9 ? * 6 ");
 		System.out.println(validExpression);
 
 	}
@@ -202,6 +199,16 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 			System.out.println("[TaskUtils.isValidExpression]:failed. throw ex:");
 		}
 		return false;
+	}
+
+
+	@Test
+	public void pubMessage(){
+
+
+		Boolean masg = sendMessageService.sendDeviceMessage("12","1","/jqLf0X9GFja/device3/get");
+		System.out.println(masg);
+
 	}
 
 }

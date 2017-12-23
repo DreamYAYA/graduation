@@ -11,4 +11,6 @@ public interface DeviceTimerService {
     void updateDeviceTimer(DeviceTimer deviceTimer);
 
     void deleteDeviceTimer(DeviceTimer deviceTimer);
+
+    DeviceTimer findDeviceTimerById(String timerId);
 }

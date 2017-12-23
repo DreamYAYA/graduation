@@ -18,6 +18,7 @@ public class DeviceTimerController {
     @Autowired
     private DeviceTimerService deviceTimerService;
 
+
     //设备定时器
     @RequestMapping("create")
     @ResponseBody
@@ -26,8 +27,6 @@ public class DeviceTimerController {
 
         deviceTimerService.createDeviceTimer(deviceTimer);
         return ServerResponse.createBySuccessMessage("创建定时器成功!");
-
-
     }
 
 
