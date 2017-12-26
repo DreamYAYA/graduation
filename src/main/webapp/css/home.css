@@ -8,6 +8,11 @@
 	height: 100%;
 }
 
+
+.ng-hide {
+	width: 0px;
+}
+
  .logo{
 	font-size: 40px;
 	width: 240px;
@@ -100,7 +105,7 @@ transition: all 0.2s ease-out 0s;
 
 .toggle-btn:hover{
 	
-	background: ;
+
 }
 
 

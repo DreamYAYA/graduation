@@ -9,27 +9,28 @@
 		<link rel="stylesheet" href="../css/home.css" />
 		<script type="text/javascript" src="../js/angular.min.js" ></script>
 		<script type="text/javascript" src="../js/angular-route.min.js" ></script>
+		<script type="text/javascript" src="../js/angular-animate.min.js"></script>
+		<style>
+		</style>
+
 	</head>
 
-	<body ng-app="myApp">
-		
-		<div > 
+	<body ng-app="myApp" >
+
+
+		<div>
 			
-			<div class="logo">
+			<div class="logo" >
 				<a>IOT</a>
 			</div>
-		<div class="home-left">
-			
+		<div class="home-left" >
 			<ul>
 				<li class="active list-item">
 					<a href="#">首页</a>
-			 
-					
 				</li>
 				
 				<li class=" list-item">
 					<a href="#">智能设备</a>
-					
 					<ul class="sub-menu-list" >
 							<li><a href="#/">设备列表</a></li>
 							<li><a href="#/devicesController">设备遥控</a></li>
@@ -55,14 +56,12 @@
 							<li><a href="#/addTimer">添加定时器</a></li>
 					</ul>
 				</li>
-				
-				
+
 				<li class="list-item">
 					<a href="#">话题讨论</a>
 					
 				</li>
-				
-				
+
 				<li class="list-item">
 					<a href="#">群组功能</a>
 				</li>
@@ -112,12 +111,12 @@
 		
 		
         <script>
-            angular.module('myApp',['ngRoute'])
-            .config(['$routeProvider', function($routeProvider){
+            var app = angular.module('myApp',['ngRoute','ngAnimate']);
+            app.config(['$routeProvider', function($routeProvider){
                 $routeProvider
-                .when('/',{templateUrl:'devices/devicesList.html'})
+                .when('/',{templateUrl:'devices/devicesList.html',controller:'deviceListController'})
                 .when('/devicesController',{templateUrl:'devices/devicesController.html'})
-                .when('/addDevices',{templateUrl:'devices/addDevices.html'})
+                .when('/addDevices',{templateUrl:'devices/addDevices.html',controller:'addDeviceController'})
                 .when('/alertList',{templateUrl:'timers/alertList.html'})
                 .when('/addAlert',{templateUrl:'timers/addAlert.html'})
                 .when('/timerList',{templateUrl:'timers/TimerList.html'})
@@ -126,7 +125,63 @@
                 .when('/addMath',{templateUrl:'mathInterface/addMath.html'})
                 .otherwise({redirectTo:'/'});
             }]);
+            //自定义过滤器
+            app.filter('isOnline', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='0'){
+
+                        text = text.replace("0","不在线");
+                    }else if(text='1'){
+                        text = text.replace("1","在线");
+                    }
+
+                    return text;
+                }
+            });
+
+            //自定义过滤器
+            app.filter('isPublic', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='0'){
+
+                        text = text.replace("0","不公开");
+                    }else if(text='1'){
+                        text = text.replace("1","公开");
+                    }
+                    return text;
+                }
+            });
+
+			//设备列表
+            app.controller("deviceListController",function ($scope, $http) {
+
+                $scope.$on("$routeChangeSuccess",function(){
+
+                    //跳转成功后触发该函数
+                    console.log("ng-view content loaded!");
+
+                    $http.get("/device/deviceList")
+						.success(function (response) {
+
+						    $scope.name="ssssss";
+						    $scope.devices = response.data;
+
+						});
+
+                });
+
+            })
+
+			//添加设备
+			app.controller("addDeviceController",function () {
+
+
+            });
+
         </script>
 		
 	</body>
+
 </html>

@@ -46,6 +46,7 @@ public class SchedledConfiguration {
      * attention:
      * Details：定义quartz调度工厂
      */
+
     @Bean
     public SchedulerFactoryBean schedulerFactoryBean(Trigger jobTrigger) {
         SchedulerFactoryBean bean = new SchedulerFactoryBean();
@@ -54,7 +55,7 @@ public class SchedledConfiguration {
 //        // 延时启动，应用启动1秒后
         bean.setStartupDelay(1);
 //        // 注册触发器
-        bean.setTriggers(jobTrigger);
+  //      bean.setTriggers(jobTrigger);
         return bean;
     }
 

@@ -1,5 +1,6 @@
+<?xml version="1.0" encoding="GB2312"?>
 <configuration>
-    <!-- %m输出的信息,%p日志级别,%t线程名,%d日期,%c类的全名,,,, -->
+
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder>
             <pattern>%d %p (%file:%line\)- %m%n</pattern>
@@ -20,7 +21,7 @@
             <pattern>
                 %d %p (%file:%line\)- %m%n
             </pattern>
-            <charset>UTF-8</charset> <!-- 此处设置字符集 -->
+            <charset>UTF-8</charset> <!-- �˴������ַ��� -->
         </encoder>
     </appender>
     <root level="info">
@@ -29,4 +30,5 @@
     <logger name="com.example" level="DEBUG">
         <appender-ref ref="baselog" />
     </logger>
+
 </configuration>

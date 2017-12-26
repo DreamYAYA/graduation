@@ -1,9 +1,9 @@
- <div class="list-header">
- 	
+ <div class="list-header" ng-controller="deviceListController">
+ 	{{name}}
 <h3>智能设备列表<small> List of your Devices</small></h3>
  	
- 	<div class="content-wrapper ">
- 		
+ 	<div class="content-wrapper " >
+
  		<table class="table table-hover">
 
 
@@ -17,30 +17,22 @@
     		<th>编辑</th>
     		<th>控制模式</th>
   		</tr>
+
+
   		
-  		<tr>
-    		<td>1463</td>
-   		 	<td>led灯</td>
-   		 	<td>d3a5f0e19</td>
-   		 	<td>公开</td>
-   		 	<td>不在线</td>
-   		 	<td>10时</td>
+  		<tr  ng-repeat=" device in devices">
+    		<td>{{device.deviceId}}</td>
+   		 	<td>{{device.deviceName}}</td>
+   		 	<td>{{device.apikey}}</td>
+   		 	<td>{{device.deviceIspublic|isPublic}}</td>
+   		 	<td>{{device.deviceStatue|isOnline}}</td>
+   		 	<td>{{device.deviceTime}}分钟</td>
    		 	<td>编辑</td>
    		 	<td>控制模式</td>
    		 	
   		</tr>
 
-  		<tr>
-    		<td>1463</td>
-   		 	<td>led灯</td>
-   		 	<td>d3a5f0e19</td>
-   		 	<td>公开</td>
-   		 	<td>不在线</td>
-   		 	<td>10时</td>
-   		 	<td>编辑</td>
-   		 	<td>控制模式</td>
-   		 	
-  		</tr>
+
          </table>
  		
  		
@@ -49,8 +41,10 @@
  		
  		
  	</div>
- 	
+
+
  	
  	
  	
  </div>
+
