@@ -15,4 +15,7 @@ public interface DeviceService {
     Integer updateDevice(DataBean deviceData);
 
     Device findDeviceById(String deviceId);
+
+    List<Device> onlineDeviceList(Integer status);
+
 }

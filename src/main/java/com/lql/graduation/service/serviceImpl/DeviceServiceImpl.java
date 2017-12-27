@@ -121,5 +121,17 @@ public class DeviceServiceImpl implements DeviceService{
         return device;
     }
 
+    /**
+     * 查询在线的设备
+     * @return
+     */
+    @Override
+    public List<Device> onlineDeviceList(Integer status) {
+
+            List<Device> onlineDeviceList = deviceMapper.selectDeviceByIsOnlineStatus(status);
+
+        return onlineDeviceList;
+    }
+
 
 }

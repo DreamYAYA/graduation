@@ -1,4 +1,4 @@
- <div class="list-header">
+ <div class="list-header" ng-controller="mathInterfaceListController">
  	
 <h3>数据接口列表 <small> List of your Inputs </small></h3>
  	
@@ -18,29 +18,16 @@
     	
   		</tr>
   		
-  		<tr>
-    		<td>1463</td>
-   		 	<td>led灯</td>
-   		 	<td>d3a5f0e19</td>
-   		 	<td>公开</td>
-   		 	<td>不在线</td>
-   		 	<td>10时</td>
+  		<tr ng-repeat=" interface in interfaces">
+    		<td>{{interface.deviceInterfaceName}}</td>
+   		 	<td>{{interface.deviceInterfaceId}}</td>
+   		 	<td>{{interface.deviceId}}</td>
+   		 	<td>{{interface.deviceInterfaceType|interfaceType}}</td>
+   		 	<td>{{interface.updateTimer|date:'yyyy-MM-dd HH:mm' }}</td>
    		 	<td>编辑</td>
-   		 
-   		 	
+   		 	<td>数据查看</td>
   		</tr>
 
-  		<tr>
-    		<td>1463</td>
-   		 	<td>led灯</td>
-   		 	<td>d3a5f0e19</td>
-   		 	<td>公开</td>
-   		 	<td>不在线</td>
-   		 	<td>10时</td>
-   		 	<td>编辑</td>
-   		
-   		 	
-  		</tr>
          </table>
  		
  		

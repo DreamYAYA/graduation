@@ -1,9 +1,11 @@
 package com.lql.graduation.mapper;
 
 import com.lql.graduation.pojo.DeviceAlert;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface DeviceAlertMapper {
     int deleteByPrimaryKey(String deviceAlertId);
 

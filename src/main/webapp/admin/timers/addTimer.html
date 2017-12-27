@@ -1,4 +1,4 @@
- <div class="control-header">
+ <div class="control-header" ng-controller="addTimerController">
  	
 <h3> 添加定时器 <small> Add Timer </small></h3>
  	
@@ -10,159 +10,96 @@
     <input type="email" class="form-control" id="exampleInputEmail1">
   </div>
  	
- 	
- 	    <div class="form-group">
+
+      <div class="form-group">
     	发送目标：
 <select class="form-control">
-  <option>手机</option>
-  <option>LED灯</option>
+  <option ng-repeat="device in devices" value="{{device.deviceId}}">{{device.deviceName}}</option>
 </select>
+
    </div>
    
    
   <div class="checkbox">
   	星期选择：
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox1" value="option1">星期一
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox2" value="option2">星期二
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox3" value="option3">星期三
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox3" value="option3">星期四
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox3" value="option3">星期五
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox3" value="option3">星期六
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="inlineCheckbox3" value="option3">星期天
-</label>
-  </div>
-  
-  <label for="hour" style="font-weight: normal;"> 小时选择：</label>
-<div class="checkbox" id="hour">
-  	 
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour0" value="option1">0
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour1" value="option2">1
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour2" value="option3">2
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour3" value="option3">3
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour4" value="option3">4
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour5" value="option3">5
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour6" value="option3">6
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour7" value="option3">7
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour8" value="option3">8
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour9" value="option3">9
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour10" value="option3">10
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour11" value="option3">11
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour12" value="option3">12
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour13" value="option3">13
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour14" value="option3">14
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour15" value="option3">15
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour16" value="option3">16
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour17" value="option3">17
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour18" value="option3">18
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour19" value="option3">19
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour20" value="option3">20
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour21" value="option3">21
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour22" value="option3">22
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="hour23" value="option3">23
-</label>
-  </div>
-  
-  
-  
-  
-  <label for="min" style="font-weight: normal;"> 分钟选择：</label>
-<div class="checkbox" id="min">
-  	 
-<label class="checkbox-inline">
-  <input type="checkbox" id="min0" value="option1">0
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min1" value="option2">1
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min2" value="option3">2
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min3" value="option3">3
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min4" value="option3">4
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min5" value="option3">5
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min6" value="option3">6
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min7" value="option3">7
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min8" value="option3">8
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min9" value="option3">9
-</label>
-<label class="checkbox-inline">
-  <input type="checkbox" id="min10" value="option3">10
-</label>
+    <select class="form-control">
 
+      <option  value="1">星期天</option>
+      <option  value="2">星期一</option>
+      <option  value="3">星期二</option>
+      <option  value="4">星期三</option>
+      <option  value="5">星期四</option>
+      <option  value="6">星期五</option>
+      <option  value="7">星期六</option>
+
+    </select>
   </div>
+
+      <div class="checkbox">
+        小时选择：
+        <select class="form-control">
+
+          <option  value="0">0</option>
+          <option  value="1">1</option>
+          <option  value="2">2</option>
+          <option  value="3">3</option>
+          <option  value="4">4</option>
+          <option  value="5">5</option>
+          <option  value="6">6</option>
+          <option  value="7">7</option>
+          <option  value="8">8</option>
+          <option  value="9">9</option>
+          <option  value="10">10</option>
+          <option  value="11">11</option>
+          <option  value="12">12</option>
+          <option  value="13">13</option>
+          <option  value="14">14</option>
+          <option  value="15">15</option>
+          <option  value="16">16</option>
+          <option  value="17">17</option>
+          <option  value="18">18</option>
+          <option  value="19">19</option>
+          <option  value="20">20</option>
+          <option  value="21">21</option>
+          <option  value="22">22</option>
+          <option  value="23">23</option>
+
+        </select>
+      </div>
+
+
+
+
+      <div class="checkbox">
+        分钟选择：
+        <select class="form-control">
+
+          <option  value="0">0</option>
+          <option  value="1">1</option>
+          <option  value="2">2</option>
+          <option  value="3">3</option>
+          <option  value="4">4</option>
+          <option  value="5">5</option>
+          <option  value="6">6</option>
+          <option  value="7">7</option>
+          <option  value="8">8</option>
+          <option  value="9">9</option>
+          <option  value="10">10</option>
+          <option  value="11">11</option>
+          <option  value="12">12</option>
+          <option  value="13">13</option>
+          <option  value="14">14</option>
+          <option  value="15">15</option>
+          <option  value="16">16</option>
+          <option  value="17">17</option>
+          <option  value="18">18</option>
+          <option  value="19">19</option>
+          <option  value="20">20</option>
+          <option  value="21">21</option>
+          <option  value="22">22</option>
+          <option  value="23">23</option>
+        </select>
+      </div>
    
 
    

@@ -1,4 +1,4 @@
- <div class="list-header">
+ <div class="list-header" ng-controller="alertListController">
  	
 <h3>报警提示列表<small> List of Alerts </small></h3>
  	
@@ -18,36 +18,20 @@
     	
   		</tr>
   		
-  		<tr>
-    		<td>1463</td>
-   		 	<td>led灯</td>
-   		 	<td>d3a5f0e19</td>
-   		 	<td>公开</td>
-   		 	<td>不在线</td>
-   		 	<td>10时</td>
+  		<tr ng-repeat="alert in alerts">
+    		<td>{{alert.deviceAlertId}}</td>
+   		 	<td>{{alert.deviceAlertName}}</td>
+   		 	<td>{{alert.deviceInterfaceId}}</td>
+   		 	<td>x{{alert.deviceAlertVal|component}}{{alert.deviceValue}}</td>
+   		 	<td>{{alert.deviceAlertSendmethod|sendMethod}}</td>
+   		 	<td>{{alert.deviceAlertStatus|alertStatue}}</td>
    		 	<td>编辑</td>
    		 
    		 	
   		</tr>
 
-  		<tr>
-    		<td>1463</td>
-   		 	<td>led灯</td>
-   		 	<td>d3a5f0e19</td>
-   		 	<td>公开</td>
-   		 	<td>不在线</td>
-   		 	<td>10时</td>
-   		 	<td>编辑</td>
-   		
-   		 	
-  		</tr>
          </table>
- 		
- 		
- 		
- 		
- 		
- 		
+
  	</div>
  	
  	

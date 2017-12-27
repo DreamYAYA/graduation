@@ -210,4 +210,26 @@
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
     where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
   </update>
+
+
+  <select id="selectByStatus" resultMap="BaseResultMap">
+  select
+  <include refid="Base_Column_List"/>
+  from DEVICE
+</select>
+
+
+  <select id="findDeviceByName" resultMap="BaseResultMap" parameterType="string">
+  select
+  <include refid="Base_Column_List"/>
+  from DEVICE WHERE DEVICE_NAME=#{deviceName}
+</select>
+
+  <select id="selectDeviceByIsOnlineStatus" parameterType="int" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List"/>
+    from DEVICE WHERE DEVICE_ISONLINE = #{status}
+  </select>
+
+
 </mapper>

@@ -3,6 +3,7 @@ package com.lql.graduation.controller.device;
 
 import com.lql.graduation.pojo.Device;
 import com.lql.graduation.service.DeviceService;
+import com.lql.graduation.util.Constant;
 import com.lql.graduation.util.ResponseCode;
 import com.lql.graduation.util.ServerResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +42,20 @@ public class DeviceController {
            return ServerResponse.createBySuccessMessage("查询成功",deviceList);
        }
 
+    /**
+     *
+     * 查询在线的设备
+     * @return
+     */
+    @RequestMapping("/queryOnlineDevice")
+        @ResponseBody
+       public ServerResponse DeviceLisOnline(){
 
+           List<Device> onlineDevice = deviceService.onlineDeviceList(Constant.Device.DEVICE_ONLINE);
+           if(onlineDevice!=null){
+               return  ServerResponse.createBySuccessMessage("查询成功",onlineDevice);
+           }
+           return ServerResponse.createByErrorMessage("查询失败");
+       }
 
 }
