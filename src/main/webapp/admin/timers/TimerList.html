@@ -1,4 +1,4 @@
- <div class="list-header">
+ <div class="list-header" ng-controller="timerListController">
  	
 <h3>定时器列表<small> List of Timers </small></h3>
  	
@@ -18,10 +18,20 @@
     		<th>分</th>
     		<th>目标设备</th>
     		<th>命令内容</th>
-    		  
-    		
-    		
   		</tr>
+
+			<tr ng-repeat="timer in timers">
+				<th>{{timer.deviceTimerId}}</th>
+				<th>{{timer.deviceTimerName}}</th>
+				<th>编辑</th>
+				<th>{{timer.deviceTimerStatus}}</th>
+				<th>重复</th>
+				<th>{{timer.deviceTiemrWeek}}</th>
+				<th>{{timer.deviceTiemrHour}}</th>
+				<th>{{timer.deviceTimerMiner}}</th>
+				<th>{{timer.deviceTimerTode}}</th>
+				<th>{{timer.deviceTimerMes}}</th>
+			</tr>
   		
   	
 

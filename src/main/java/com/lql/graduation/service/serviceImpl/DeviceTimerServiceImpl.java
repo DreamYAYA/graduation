@@ -41,7 +41,7 @@ public class DeviceTimerServiceImpl implements DeviceTimerService{
         deviceTimerMapper.insert(deviceTimer);
         System.out.println("Cro 表达式:"+"0 "+deviceTimer.getDeviceTimerMiner()+" " +deviceTimer.getDeviceTiemrHour()+" " +"? "+"* "+deviceTimer.getDeviceTiemrWeek()+" ");
         //动态的添加定时的任务
-        quartzManager.addJob(deviceTimerName, deviceTimerName, deviceTimerName, deviceTimerName, TimerJob.class, "0 "+deviceTimer.getDeviceTimerMiner()+" " +deviceTimer.getDeviceTiemrHour()+" " +"? "+"* "+deviceTimer.getDeviceTiemrWeek()+" ",timerId);
+        //quartzManager.addJob(deviceTimerName, deviceTimerName, deviceTimerName, deviceTimerName, TimerJob.class, "0 "+deviceTimer.getDeviceTimerMiner()+" " +deviceTimer.getDeviceTiemrHour()+" " +"? "+"* "+deviceTimer.getDeviceTiemrWeek()+" ",timerId);
 
     }
 

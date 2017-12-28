@@ -477,12 +477,61 @@
                 });
 
                 $scope.submit = function () {
-					
+
+                    //定时器名称
+					var timerName = $scope.TimerName;
+					//发送目标
+					var sendTarget = $scope.sendTarget;
+					//星期
+					var timWeek = $scope.timerWeek;
+					//小时
+					var timHour = $scope.timerHoure;
+					//分钟
+					var timMinue = $scope.timerMinue;
+					//命令的内容
+					var deviceTimerMes = $scope.controllerContent;
+                    //添加定时器
+                    $http({
+                        method: 'GET',
+                        url: '/deviceTimer/create',
+						params:{'deviceTimerTode':sendTarget,'deviceTimerName':timerName,
+						'deviceTiemrWeek':timWeek,'deviceTiemrHour':timHour,'deviceTimerMiner':timMinue,
+							'deviceTimerMes':deviceTimerMes
+						}
+                    }).success(function (response) {
+
+                        var status = response.status;
+                        if(status==0){
+
+                            window.location.href = "#/timerList";
+                        }else{
+                            alert("查询发送设备出错");
+                        }
+
+                    });
                 }
+            });
+
+
+			app.controller('timerListController',function ($scope,$http) {
+
+                //获取发送目标的设备数据
+                $http({
+                    method: 'GET',
+                    url: '/device/deviceList'
+                }).success(function (response) {
+
+                    var status = response.status;
+                    if(status==0){
+                        $scope.devices = response.data;
+                    }else{
+                        alert("查询发送设备出错");
+                    }
+
+                });
 
 
             });
-
         </script>
 		
 	</body>

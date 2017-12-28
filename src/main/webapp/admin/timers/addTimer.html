@@ -7,13 +7,13 @@
  	<form>
    <div class="form-group">
     <label for="exampleInputEmail1" style="font-weight: normal;">定时器名称 ：</label>
-    <input type="email" class="form-control" id="exampleInputEmail1">
+    <input type="text" class="form-control" id="exampleInputEmail1" ng-model="TimerName">
   </div>
  	
 
       <div class="form-group">
     	发送目标：
-<select class="form-control">
+<select class="form-control" ng-model="sendTarget">
   <option ng-repeat="device in devices" value="{{device.deviceId}}">{{device.deviceName}}</option>
 </select>
 
@@ -22,7 +22,7 @@
    
   <div class="checkbox">
   	星期选择：
-    <select class="form-control">
+    <select class="form-control" ng-model="timerWeek">
 
       <option  value="1">星期天</option>
       <option  value="2">星期一</option>
@@ -37,7 +37,7 @@
 
       <div class="checkbox">
         小时选择：
-        <select class="form-control">
+        <select class="form-control" ng-model="timerHoure">
 
           <option  value="0">0</option>
           <option  value="1">1</option>
@@ -72,8 +72,7 @@
 
       <div class="checkbox">
         分钟选择：
-        <select class="form-control">
-
+        <select class="form-control" ng-model="timerMinue">
           <option  value="0">0</option>
           <option  value="1">1</option>
           <option  value="2">2</option>
@@ -105,7 +104,7 @@
    
    <div class="form-group">
     <label for="controllerMesg" style="font-weight: normal;">命令内容 ：</label>
-    <input type="email" class="form-control" id="controllerMesg">
+    <input type="email" class="form-control" id="controllerMesg" ng-model="controllerContent">
   </div>
  
  
@@ -113,10 +112,10 @@
   <div class="row alert-bt">
   	
   	<!-- Standard button -->
-<button type="button" class="btn btn-success col-md-3">确定</button>
+<button type="button" class="btn btn-success col-md-3" ng-click="submit()">确定</button>
 
 <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
-<button type="button" class="btn btn-danger col-md-3">重置</button>	
+<button type="button" class="btn btn-danger col-md-3" ng-click="reset()">重置</button>
   </div> 
   
   
