@@ -1,0 +1,202 @@
+ 
+
+.home-left{
+
+	width: 240px;
+	position: fixed;
+	background-color: #424f63;
+	height: 100%;
+}
+
+
+.ng-hide {
+	width: 0px;
+}
+
+ .logo{
+	font-size: 40px;
+	width: 240px;
+	height: 40px;
+	font-family:'Open Sans', sans-serif ;
+	background-color: #424f63;
+	font-weight: 200;
+	text-align: center;
+	line-height: 20px;
+	padding-top: 10px;
+}
+
+.logo a{
+	
+	color: #FFF;
+}
+
+
+.list-item{
+	
+}
+
+.list-item>a,.sub-menu-list a{
+	
+	display:inline-block;
+	width: 240px;
+	height: 40px;
+	padding:10px 20px;
+	font-size: 14px;
+	line-height: 20px;
+	 
+}
+
+.list-item>a{
+	
+	background: url(../img/plus-white.png) no-repeat right 20px center;
+}
+
+.sub-menu-list a{
+	width: 240px;
+	padding-left: 60px;
+	padding-right: 10px;
+	padding-top: 5px;
+}
+
+
+.list-item>a:hover{
+	
+background-color: #353f4f;
+background-image: url(../img/plus.png);
+color: #65cea7;
+}
+
+.sub-menu-list{
+	
+	background: #353f4f; 
+	width: 240px;
+	font-size: 14px;
+}
+
+.active{
+	
+	color: #65cea7;
+	
+}
+
+
+/*header start*/
+
+.home-header{
+position: fixed;	
+top: 0;	
+left: 240px;
+z-index: 100;
+width: 100%;
+}
+
+.toggle-btn{
+	
+width: 52px;
+height: 50px;
+font-size: 20px;
+padding: 15px;
+cursor: pointer;
+float: left;
+color: #212121;
+border-right: 1px solid #e7e7e7;	
+transition: all 0.2s ease-out 0s;
+}
+
+.toggle-btn:hover{
+	
+
+}
+
+
+.toggle-btn-container,.input-search-container{
+	
+	
+}
+
+.input-search-container {
+
+width: 200px;
+margin-top: 10px;
+margin-left: 80px;
+
+
+}
+/*header end*/
+
+/*mainContentStart*/
+.mainContent{
+	
+   position: relative;
+    margin-left: 240px;
+    margin-top: 10px;
+    
+	
+}
+
+/*mainContentEnd*/
+
+
+/*list-header start*/
+
+.list-header,.control-header,.add-header{
+	
+	padding: 15px;
+	
+}
+
+h3{
+	
+	color:#49586e;
+	
+}
+
+
+.content-wrapper{
+	
+	padding: 15px;
+}
+/*list-header end*/
+
+/*controllerheader start*/
+
+.message-wrapper{
+	
+	
+	border:1px solid darkgray;
+	padding: 15px;
+	margin-top: 10px;
+	
+}
+
+.bg-danger{
+	
+	height: 73px;
+	padding: 10px;
+	
+}
+
+.message-title,.message-content{
+	
+	display: inline-block;
+	padding-top: 10px;
+	font-size: 14px;
+	font-weight: bold;
+}
+
+.bg-danger .message-title,.bg-danger .message-content{
+	
+	color: #A94442;
+}
+.bg-danger .message-content{
+	font-weight:normal
+}
+
+.alert-bt button{
+	
+	margin: 10px;
+}
+.checkbox-inline{
+	margin: 0px;
+}
+/*controllerheader end*/

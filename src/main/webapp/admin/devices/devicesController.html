@@ -1,0 +1,68 @@
+ <div class="control-header" ng-controller="devicesController">
+ 	
+<h3> 遥控设备 <small> Remote Control </small></h3>
+ 	
+ 	<div class="content-wrapper">
+
+
+ 				<div class="panel panel-primary">
+ 					
+ 					<div class="panel-heading">当前在线设备</div>
+ 										
+ 				<ul class="list-group">
+    				<li class="list-group-item" ng-repeat=" device in onlineDevices">{{device.deviceName}}</li>
+  				</ul>
+
+				</div>
+
+ 			<div class="panel panel-primary">
+ 					
+ 				<div class="panel-heading">遥控设备</div>
+ 				  <div class="panel-body">
+    				Panel content
+  					</div>		
+  				
+ 			</div>
+ 			
+ 			
+ 			<div class="panel panel-primary">
+ 					
+ 				<div class="panel-heading">命令记录</div>
+ 				  <div class="panel-body">
+    				
+  			
+  				<div class="input-group">
+  		<span class="input-group-addon" id="basic-addon3">发送目标</span>
+  		<select class="form-control" ng-model="targetDevice">
+  		<option>所有人</option>
+			<option ng-repeat=" device in onlineDevices" value="{{device.deviceId}}">{{device.deviceName}}</option>
+		</select>
+		</div>
+					  <div class="row">
+					  <div class="col-lg-12">
+						  <div class="input-group">
+							  <input type="text" class="form-control" placeholder="Message for..." ng-model="controMessage">
+							  <span class="input-group-btn">
+        <button class="btn btn-default" type="button" ng-click="sendMessage()">发送</button>
+      </span>
+						  </div><!-- /input-group -->
+					  </div><!-- /.col-lg-6 -->
+					  </div>
+
+		<div class="message-wrapper">
+		<p class="bg-danger">
+			<span class="message-title">系统消息(10时53分52秒)</span><br/>
+            <span class="message-content">jikehifi_lql(web) 上线</span>
+ 
+        </p>
+		</div>
+ 			
+ 				  
+ 	</div>
+ 		
+ 	</div>
+ 	
+ 	
+ 	
+ 	
+ </div>

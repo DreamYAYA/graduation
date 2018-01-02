@@ -1,0 +1,559 @@
+
+<html>
+
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="../css/bootstrap.min.css" />
+		<link rel="stylesheet" href="../css/base.css" />
+		<link rel="stylesheet" href="../css/home.css" />
+		<script type="text/javascript" src="../js/jquery-1.11.1.min.js"></script>
+		<script type="text/javascript" src="../js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="../js/angular.min.js" ></script>
+		<script type="text/javascript" src="../js/angular-route.min.js" ></script>
+		<script type="text/javascript" src="../js/angular-animate.min.js"></script>
+		<style>
+		</style>
+
+	</head>
+
+	<body ng-app="myApp" >
+
+
+		<div>
+			
+			<div class="logo" >
+				<a>IOT</a>
+			</div>
+		<div class="home-left" >
+			<ul>
+				<li class="active list-item">
+					<a href="#">首页</a>
+				</li>
+				
+				<li class=" list-item">
+					<a href="#">智能设备</a>
+					<ul class="sub-menu-list" >
+							<li><a href="#/">设备列表</a></li>
+							<li><a href="#/devicesController">设备遥控</a></li>
+							<li><a href="#/addDevices">添加设备</a></li>
+					</ul>
+				</li>
+				
+				<li class="list-item">
+					<a href="#">数据接口</a>
+					<ul class="sub-menu-list" >
+							<li><a href="#/mathLists">接口列表</a></li>
+							<li><a href="#/addMath">添加接口</a></li>
+					</ul>
+				</li>
+						
+				<li class="list-item">
+					<a href="#">报警提示</a>
+					
+					<ul class="sub-menu-list" >
+							<li><a href="#/alertList">报警列表</a></li>
+							<li><a href="#/addAlert">添加报警</a></li>
+							<li><a href="#/timerList">定时器列表</a></li>
+							<li><a href="#/addTimer">添加定时器</a></li>
+					</ul>
+				</li>
+
+				<li class="list-item">
+					<a href="#">话题讨论</a>
+					
+				</li>
+
+				<li class="list-item">
+					<a href="#">群组功能</a>
+				</li>
+			
+			</ul>
+
+		</div>
+		
+		<!--header start-->
+		<div class="home-header">
+			
+			<div class="toggle-btn-container">
+				
+				<a class="toggle-btn"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></a>
+			</div>
+
+			<div class="input-search-container ">
+				
+	<div class="input-group">
+		
+      	<input type="text" class="form-control" placeholder="Search for...">
+     
+       <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Go!</button>
+      </span>
+      
+    	</div>
+			</div>
+			     
+			<div class="my-container">
+	
+				
+			</div>
+			
+		</div>
+		
+		
+		</div>
+		<!-- header end!-->
+		
+		<!-- mainContetn start-->
+		
+		<div  class="mainContent" ng-view>
+			
+		</div>
+		<!-- mainContetn end-->
+		
+		
+        <script>
+            var app = angular.module('myApp',['ngRoute','ngAnimate']);
+            app.config(['$routeProvider', function($routeProvider){
+                $routeProvider
+                .when('/',{templateUrl:'devices/devicesList.html',controller:'deviceListController'})
+                .when('/devicesController',{templateUrl:'devices/devicesController.html',controller:'devicesController'})
+                .when('/addDevices',{templateUrl:'devices/addDevices.html',controller:'addDeviceController'})
+                .when('/alertList',{templateUrl:'timers/alertList.html',controller:'alertListController'})
+                .when('/addAlert',{templateUrl:'timers/addAlert.html',controller:'addAlertController'})
+                .when('/timerList',{templateUrl:'timers/TimerList.html'})
+                .when('/addTimer',{templateUrl:'timers/addTimer.html',controller:'addTimerController'})
+                .when('/mathLists',{templateUrl:'mathInterface/mathtList.html',controller:'mathInterfaceListController'})
+                .when('/addMath',{templateUrl:'mathInterface/addMath.html'})
+                .otherwise({redirectTo:'/'});
+            }]);
+            //自定义过滤器
+            app.filter('isOnline', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='0'){
+
+                        text = text.replace("0","不在线");
+                    }else if(text='1'){
+                        text = text.replace("1","在线");
+                    }
+
+                    return text;
+                }
+            });
+
+            //自定义过滤器
+            app.filter('isPublic', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='0'){
+
+                        text = text.replace("0","不公开");
+                    }else if(text='1'){
+                        text = text.replace("1","公开");
+                    }
+                    return text;
+                }
+            });
+
+            //符号过滤器
+            app.filter('component', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='1'){
+                        text = text.replace("1",">");
+                    }else if(text='2'){
+                        text = text.replace("2","=");
+                    }else if(text='3'){
+                        text = text.replace("3","<");
+                    }else if(text='4'){
+                        text = text.replace("4",">=");
+                    }else if(text='5'){
+                        text = text.replace("5","<=");
+                    }else if(text='6'){
+                        text = text.replace("6","!=");
+                    }
+                    return text;
+                }
+            });
+
+
+            //发送方式过滤器
+            app.filter('sendMethod', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='1'){
+                        text = text.replace("1","邮件");
+                    }else if(text='2'){
+                        text = text.replace("2","短信");
+                    }
+                    return text;
+                }
+            });
+
+            //发送方式过滤器
+            app.filter('alertStatue', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='1'){
+                        text = text.replace("1","启用");
+                    }else if(text='2'){
+                        text = text.replace("0","停用");
+                    }
+                    return text;
+                }
+            });
+
+
+            //接口类型过滤器
+            app.filter('interfaceType', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='1'){
+                        text = text.replace("1","模拟量");
+                    }else if(text='2'){
+                        text = text.replace("2","数字量");
+                    }else if(text='3'){
+                        text = text.replace("3","定位接口");
+                    }else if(text='4'){
+                        text = text.replace("4","数字接口");
+                    }
+                    return text;
+                }
+            });
+
+			//设备列表
+            app.controller("deviceListController",function ($scope, $http) {
+
+                $scope.$on("$routeChangeSuccess",function(){
+
+                    //跳转成功后触发该函数
+                    console.log("ng-view content loaded!");
+
+                    $http.get("/device/deviceList")
+						.success(function (response) {
+
+						    $scope.name="ssssss";
+						    $scope.devices = response.data;
+
+						});
+                });
+            })
+
+			//添加设备
+			app.controller("addDeviceController",function ($scope,$http) {
+
+                $scope.submit=function () {
+
+                    //设备名称
+                    var deviceName = $scope.Dname;
+                    //设备是否公开
+                    var deviceIsPublic = $scope.ispublic;
+                    //设备简介
+                    var deviceIntroduce = $scope.deviceIntroduce;
+                    //设备描述
+                    var deviceDescription = $scope.deviceDescription;
+
+                    $http({
+                        method: 'GET',
+                        url: '/device/creatDevice',
+                        params:{'deviceName':deviceName,'deviceIspublic':deviceIsPublic,'deviceIntroduce':deviceIntroduce,'deviceDescription':deviceDescription}
+					}).success(function (response) {
+                        var status = response.status;
+                        if(status==0){
+                            $("#myalert").fadeIn("slow");
+                            window.location.href="#/";
+						}else{
+							alert("添加设备出错了");
+						}
+
+                        });
+
+
+
+
+                }
+                $scope.reset=function () {
+                    $("#myalert").fadeOut("slow");
+
+                }
+
+            });
+
+            //设备控制
+			app.controller("devicesController",function ($scope,$http) {
+
+			    //查询在线的设备列表
+                $http({
+                    method: 'GET',
+                    url: '/device/queryOnlineDevice'
+                }).success(function (response) {
+                    var status = response.status;
+                    if(status==0){
+                        $scope.onlineDevices = response.data;
+                    }else{
+                        alert("查询在线设备出错了");
+                    }
+
+                });
+
+                $scope.sendMessage=function () {
+					//获取发送设备的ID号
+					var deivceId = $scope.targetDevice;
+					//获取发送的消息的命令
+					var controllerMessage = $scope.controMessage;
+                    //发送控制命令
+                    $http({
+                        method: 'POST',
+                        url: '/device/sendMessage',
+						params:{"DeviceId":deivceId,"controllerMsg":controllerMessage}
+                    }).success(function (response) {
+                        var status = response.status;
+                        if(status==0){
+                          alert("消息发送成功!");
+                        }else{
+                            alert("消息发送失败，请稍后再试!");
+                        }
+
+                    });
+
+                }
+				
+            });
+
+			//添加数据接口
+			app.controller("addMathInterfaceController",function ($scope,$http) {
+
+                //查询所有的设备
+                $http({
+                    method: 'GET',
+                    url: '/device/deviceList'
+                }).success(function (response) {
+                    var status = response.status;
+                    if(status==0){
+                        $scope.devices = response.data;
+                    }else{
+                        alert("查询设备出错了");
+                    }
+
+                });
+
+                //添加设备
+                $scope.submit = function () {
+
+                        //设备Id
+                        var deviceId = $scope.deviceId;
+                        //接口名称
+                        var deviceInterfaceName = $scope.interfaceName;
+                        //接口类型
+                        var deviceInterfaceType = $scope.interfaceType;
+                        //单位
+                        var deviceUnit = $scope.deviceUnit ;
+                        //接口描述
+                        var interfaceDescription = $scope.interfaceDescription;
+
+                        alert(deviceId+":"+deviceInterfaceName+":"+deviceInterfaceType+":"+deviceUnit+":"+interfaceDescription);
+
+                    $http({
+                        method: 'GET',
+                        url: '/dataInterface/create',
+                        params:{'deviceId':deviceId,'deviceInterfaceName':deviceInterfaceName,'deviceInterfaceType':deviceInterfaceType,'deviceUnit':deviceUnit,'deviceIntefaceDes':interfaceDescription}
+                    }).success(function (response) {
+                        var status = response.status;
+                        if(status==0){
+                            window.location.href="#/mathLists"
+                        }else{
+                            alert("添加数据接口出错");
+                        }
+
+                    });
+
+                }
+
+                //重置
+                $scope.reset = function () {
+
+
+
+
+                }
+            });
+
+
+			//查询接口列表
+
+            app.controller('mathInterfaceListController',function ($scope,$http) {
+
+                $http({
+                    method: 'GET',
+                    url: '/dataInterface/list'
+                }).success(function (response) {
+                    var status = response.status;
+                    if(status==0){
+
+                        $scope.interfaces = response.data;
+                    }else{
+                        alert("查询数据接口出错");
+                    }
+
+                });
+            });
+
+            //报警列表查询
+			app.controller('alertListController',function ($scope,$http) {
+
+
+                $http({
+                    method: 'GET',
+                    url: '/alert/list'
+                }).success(function (response) {
+
+                    var status = response.status;
+                    if(status==0){
+
+                        $scope.alerts = response.data;
+                    }else{
+                        alert("查询报警接口出错");
+                    }
+
+                });
+
+
+
+
+
+            });
+            //添加报警
+            app.controller('addAlertController',function ($scope,$http) {
+
+
+                $http({
+                    method: 'GET',
+                    url: '/dataInterface/list'
+                }).success(function (response) {
+
+                    var status = response.status;
+                    if(status==0){
+
+                        $scope.interfaces = response.data;
+                    }else{
+                        alert("查询数据接口出错");
+                    }
+
+                });
+                $scope.submit = function () {
+                    var alertName = $scope.alertName;
+                    var alertStart = $scope.alertStart;
+                    var alertDataSource = $scope.alertDataSource;
+                    var alertTiaoJian = $scope.alertTiaojian;
+                    var alertTiaojianValue = $scope.alertTJValue;
+                    var sendMethod = $scope.alertSendMethod;
+
+                    if(alertStart){
+                        alertStart = '1';
+					}else{
+                        alertStart = '0';
+					}
+                    $http({
+                        method: 'GET',
+                        url: '/alert/create',
+                        params:{
+                            'deviceAlertName':alertName,'deviceAlertStatus':alertStart,
+                            'deviceInterfaceId':alertDataSource,'deviceInterfaceId':alertDataSource,
+                            'deviceAlertVal':alertTiaoJian,'deviceValue':alertTiaojianValue,
+                            'deviceAlertSendmethod':sendMethod
+                        }
+                    }).success(function (response) {
+
+                        var status = response.status;
+                        if(status==0){
+
+                           window.location.href='#/alertList';
+                        }else{
+                            alert("查询数据接口出错");
+                        }
+
+                    });
+                }
+            });
+
+
+            //添加定时器
+			app.controller('addTimerController',function ($scope,$http) {
+
+				//获取发送目标的设备数据
+                $http({
+                    method: 'GET',
+                    url: '/device/deviceList'
+                }).success(function (response) {
+
+                    var status = response.status;
+                    if(status==0){
+
+                        $scope.devices = response.data;
+                    }else{
+                        alert("查询发送设备出错");
+                    }
+
+                });
+
+                $scope.submit = function () {
+
+                    //定时器名称
+					var timerName = $scope.TimerName;
+					//发送目标
+					var sendTarget = $scope.sendTarget;
+					//星期
+					var timWeek = $scope.timerWeek;
+					//小时
+					var timHour = $scope.timerHoure;
+					//分钟
+					var timMinue = $scope.timerMinue;
+					//命令的内容
+					var deviceTimerMes = $scope.controllerContent;
+                    //添加定时器
+                    $http({
+                        method: 'GET',
+                        url: '/deviceTimer/create',
+						params:{'deviceTimerTode':sendTarget,'deviceTimerName':timerName,
+						'deviceTiemrWeek':timWeek,'deviceTiemrHour':timHour,'deviceTimerMiner':timMinue,
+							'deviceTimerMes':deviceTimerMes
+						}
+                    }).success(function (response) {
+
+                        var status = response.status;
+                        if(status==0){
+
+                            window.location.href = "#/timerList";
+                        }else{
+                            alert("查询发送设备出错");
+                        }
+
+                    });
+                }
+            });
+
+
+			app.controller('timerListController',function ($scope,$http) {
+                //获取发送目标的设备数据
+                $http({
+                    method: 'GET',
+                    url: '/deviceTimer/query'
+                }).success(function (response) {
+
+                    var status = response.status;
+                    if(status==0){
+                        $scope.timers = response.data;
+                    }else{
+                        alert("查询定时器列表出错");
+                    }
+
+                });
+            });
+
+
+        </script>
+		
+	</body>
+
+</html>

@@ -1,0 +1,72 @@
+设备发送的数据格式
+data=
+{
+    "message":"123"(或offline),//发送的消息
+    "deviceName":"xxxxxxxxxx",//设备标识
+    "time":"2017-10-11 10:11:12.234", //发送消息的时间
+    "interface":"" //发送消息的接口
+    "clientIp":"" //设备端公网出口IP
+}
+
+设备上下线
+data=
+{
+    "status":"online"(或offline),//设备状态
+    "productKey":"xxxxxxxxxxx",//产品标识
+    "deviceName":"xxxxxxxxxx",//设备标识
+    "time":"2017-10-11 10:11:12.234", //发送通知时间点
+    "lastTime":"2017-10-11 10:11:12.123" //状态变更时最后一次通信时间
+    "clientIp":"xxx.xxx.xxx.xxx" //设备端公网出口IP
+}
+
+
+添加定时器的接口
+http://localhost:8012/deviceTimer/create/?deviceTimerId=8ce34f293ad04900a23cfd584eb12c72&deviceId=7ce34f293ad04900a23cfd584eb12c72&deviceTimerName=提醒他&deviceTimerTode=dddd
+{
+  "status": 0,
+  "msg": "创建定时器成功!",
+  "data": null,
+  "success": true
+}
+
+查询定时器
+http://localhost:8012/deviceTimer/query
+{
+  "status": 0,
+  "msg": null,
+  "data": [
+    {
+      "deviceTimerId": "6490eeaa98fc47d091fa5a74a6df5845",
+      "devDeviceId": null,
+      "deviceId": "7ce34f293ad04900a23cfd584eb12c72",
+      "deviceTimerName": "提醒他",
+      "deviceTimerTode": "dddd",
+      "deviceTiemrWeek": null,
+      "deviceTiemrHour": null,
+      "deviceTimerMiner": null,
+      "deviceTimerMes": null,
+      "deviceTimerStatus": 1,
+      "createBy": null,
+      "createTime": 1513327363000,
+      "updateBy": null,
+      "updateTimer": null
+    }
+  ],
+  "success": true
+}
+
+
+更新定时器
+http://localhost:8012/deviceTimer/updata/?deviceTimerId=8ce34f293ad04900a23cfd584eb12c72&deviceId=7ce34f293ad04900a23cfd584eb12c72&deviceTimerName=打算他&deviceTimerTode=dddd
+{
+  "status": 0,
+  "msg": "更新定时器成功",
+  "data": null,
+  "success": true
+}
+
+删除定时器
+
+
+
+

@@ -1,0 +1,51 @@
+ <div class="control-header" ng-controller="addDeviceController">
+
+     <div class="alert alert-warning" style="display: none;" role="alert" id="myalert">
+         <button type="button" class="close alert-dismissible fade in" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+         <strong>Warning!</strong> Better check yourself, you're not looking too good.
+     </div>
+
+<h3> 添加智能设备 <small> Add Device </small></h3>
+ 	
+ 	<div class="content-wrapper">
+ 				
+ 	<form>
+
+        <div class="form-group">
+    <label for="exampleInputEmail1" style="font-weight: normal;" >设备名称</label>
+            <input type="text" class="form-control" id="exampleInputEmail1" ng-model="Dname"/>{{deviceName}}
+  </div>
+ 		
+  <div class="checkbox">
+    <label>
+      <input type="checkbox" ng-model="ispublic"/> 是否公开
+    </label>
+  </div>
+  
+  <div class="form-group">
+    <label for="exampleInputEmail1" style="font-weight: normal;" >设备简介</label>
+   <textarea class="form-control" rows="3" ng-model="deviceIntroduce"></textarea>
+  </div>
+ 		
+ <div class="form-group">
+   <label for="exampleInputEmail1" style="font-weight: normal;" >设备描述</label>
+   <textarea class="form-control" rows="3" ng-model="deviceDescription"></textarea>
+  </div>
+  
+  
+ 	</form>
+ 							
+ 	</div>
+
+
+     <div class="row alert-bt">
+         <!-- Standard button -->
+         <button type="button" class="btn btn-success col-md-3" ng-click="submit()">确定</button>
+         <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+         <button type="button" class="btn btn-danger col-md-3" ng-click="reset()">重置</button>
+
+     </div>
+
+	
+ </div>
+ 

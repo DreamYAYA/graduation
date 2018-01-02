@@ -1,0 +1,43 @@
+ <div class="list-header" ng-controller="mathInterfaceListController">
+ 	
+<h3>数据接口列表 <small> List of your Inputs </small></h3>
+ 	
+ 	<div class="content-wrapper ">
+ 		
+ 		<table class="table table-hover">
+
+
+		<tr>
+    		<th>名称</th>
+    		<th>ID</th>
+    		<th>所属设备id</th>
+    		<th>接口类型</th>
+    		<th>更新时间</th>
+    		<th>编辑</th>
+    		<th>数据查看</th>
+    	
+  		</tr>
+  		
+  		<tr ng-repeat=" interface in interfaces">
+    		<td>{{interface.deviceInterfaceName}}</td>
+   		 	<td>{{interface.deviceInterfaceId}}</td>
+   		 	<td>{{interface.deviceId}}</td>
+   		 	<td>{{interface.deviceInterfaceType|interfaceType}}</td>
+   		 	<td>{{interface.updateTimer|date:'yyyy-MM-dd HH:mm' }}</td>
+   		 	<td>编辑</td>
+   		 	<td>数据查看</td>
+  		</tr>
+
+         </table>
+ 		
+ 		
+ 		
+ 		
+ 		
+ 		
+ 	</div>
+ 	
+ 	
+ 	
+ 	
+ </div>
