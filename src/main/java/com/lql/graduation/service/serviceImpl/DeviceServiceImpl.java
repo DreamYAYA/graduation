@@ -86,11 +86,11 @@ public class DeviceServiceImpl implements DeviceService{
 
         if(DEVICE_ONLINE.equals(deviceData.getStatus())){
             //设备在线更改设备状态，更新设备的登录时间
-            device.setDeviceStatue(Constant.Device.DEVICE_ONLINE);
+            device.setDeviceIsonline(Constant.Device.DEVICE_ONLINE);
             device.setUpdateTime(new Date());
         }else if(DEVICE_OFFLINE.equals(deviceData.getStatus())){
             //设备下线更改设备状态，计算设备的在线时间
-            device.setDeviceStatue(Constant.Device.DEVICE_OFF);
+            device.setDeviceIsonline(Constant.Device.DEVICE_OFF);
             Date CurrentData = new Date();
             Date OldData = device.getUpdateTime();
             final long onlineTime = CurrentData.getTime() - OldData.getTime();

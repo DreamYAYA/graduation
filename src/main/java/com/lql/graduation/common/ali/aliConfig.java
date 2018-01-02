@@ -11,6 +11,8 @@ public class aliConfig {
      private String accessKeySecret = "zevYTuE0hjyLp9oqUmmIJ6r7Hb2W3F";
      private String accountEndpoint = "http://1213996060683026.mns.cn-shanghai.aliyuncs.com/";
 
+
+
      private CloudAccount account = null;
     public aliConfig() {
 
@@ -51,7 +53,6 @@ public class aliConfig {
     public CloudQueue getQue(String queName){
         MNSClient client = account.getMNSClient();
         CloudQueue queue = client.getQueueRef(queName); //参数请输入IoT自动创建的队列名称，例如上面截图中的aliyun-iot-3AbL0062osF
-
         return queue;
     }
 

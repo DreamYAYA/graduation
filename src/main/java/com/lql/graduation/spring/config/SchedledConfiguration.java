@@ -2,7 +2,7 @@ package com.lql.graduation.spring.config;
 
 
 import com.lql.graduation.common.ScheduleQuartz;
-import com.lql.graduation.pojo.Scheduler.MyJob;
+import com.lql.graduation.pojo.Scheduler.MessageHandlerJob;
 import org.quartz.Trigger;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -19,7 +19,7 @@ public class SchedledConfiguration {
      * Details：配置定时任务
      */
     @Bean
-    public MethodInvokingJobDetailFactoryBean detailFactoryBean(MyJob myJob) {// ScheduleTask为需要执行的任务
+    public MethodInvokingJobDetailFactoryBean detailFactoryBean(MessageHandlerJob myJob) {// ScheduleTask为需要执行的任务
         MethodInvokingJobDetailFactoryBean jobDetail = new MethodInvokingJobDetailFactoryBean();
 
         jobDetail.setTargetObject(myJob);
@@ -37,7 +37,7 @@ public class SchedledConfiguration {
     public CronTriggerFactoryBean cronJobTrigger(MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean) {
         CronTriggerFactoryBean tigger = new CronTriggerFactoryBean();
       tigger.setJobDetail(methodInvokingJobDetailFactoryBean.getObject());
-        tigger.setCronExpression("0/1 * * * * ?");// 初始时的cron表达式  ，没5分钟执行一次
+        tigger.setCronExpression("0/2 * * * * ?");// 初始时的cron表达式  ，没5分钟执行一次
         return tigger;
     }
 
@@ -54,8 +54,8 @@ public class SchedledConfiguration {
        bean.setOverwriteExistingJobs(true);
 //        // 延时启动，应用启动1秒后
         bean.setStartupDelay(1);
-//        // 注册触发器
-  //      bean.setTriggers(jobTrigger);
+//        // 注册触发器  注册接收消息的触发器
+        bean.setTriggers(jobTrigger);
         return bean;
     }
 
