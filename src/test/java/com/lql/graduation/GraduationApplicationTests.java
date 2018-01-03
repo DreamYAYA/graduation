@@ -136,14 +136,14 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 	@Test
 	public void sendSimplMail(){
 
-		for (int i=0;i<10;i++){
+
 			SimpleMailMessage message = new SimpleMailMessage();
 			message.setFrom("836957413@qq.com");//发送者.
-			message.setTo("1391228420@qq.com");//接收者.
+			message.setTo("17702780314@163.com");//接收者.
 			message.setSubject("测试邮件（邮件主题）");//邮件主题.
 			message.setText("这是邮件内容");//邮件内容.
 			mailSender.send(message);//发送邮件
-		}
+
 
 	}
 

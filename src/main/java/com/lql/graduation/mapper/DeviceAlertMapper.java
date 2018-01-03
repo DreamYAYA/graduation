@@ -22,4 +22,6 @@ public interface DeviceAlertMapper {
     List<DeviceAlert> queryDeviceAlertListByInterId(String deviceInerfaceData);
 
     List<DeviceAlert> queryDeviceAlertListByStatus(Integer status);
+
+    List<DeviceAlert> queryDeviceAlertByInterfaceId(String deviceAlertInterfaceId);
 }

@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 public class Mail {
 
 @Autowired
-private  JavaMailSender mailSender;
+private   JavaMailSender mailSender;
 
 
-    public  void sendSimplMail(String target, String subject, String content){
+    public   void sendSimplMail(String target, String subject, String content){
 
         SimpleMailMessage message = new SimpleMailMessage();
         message.setFrom("836957413@qq.com");//发送者.

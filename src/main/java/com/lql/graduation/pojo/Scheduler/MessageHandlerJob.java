@@ -6,6 +6,7 @@ import com.lql.graduation.common.ali.aliConfig;
 import com.lql.graduation.pojo.DeviceInterfaceData;
 import com.lql.graduation.pojo.Message.DataBean;
 import com.lql.graduation.pojo.Message.DeviceData;
+import com.lql.graduation.service.DeviceAlertService;
 import com.lql.graduation.service.DeviceInterfaceDataService;
 import com.lql.graduation.service.DeviceService;
 import com.lql.graduation.util.Constant;
@@ -33,6 +34,8 @@ public class MessageHandlerJob {
     private DeviceService deviceService;
     @Autowired
     private DeviceInterfaceDataService deviceInterfaceDataService;
+    @Autowired
+    private DeviceAlertService deviceAlertService;
 
 
     public void doSomething() {
@@ -55,6 +58,20 @@ public class MessageHandlerJob {
 
                 } else if (MESSSAGE_TYPE_UPLOAD.equals(messagetype)) {
                     //是设备的发送的消息
+                    /*
+                    *
+                    * 规定传输的数据的格式要有要求
+                    * 现在规定如下
+                    * data=
+{
+    "message":"123"(或offline),//发送的消息
+    "deviceName":"xxxxxxxxxx",//设备标识
+    "time":"2017-10-11 10:11:12.234", //发送消息的时间
+    "interface":"" //发送消息的接口
+    "clientIp":"" //设备端公网出口IP
+}
+                          @TODO    插入数据的同时去监测相应的接口是否存在有效的报警列表，有且符合相关的报警条件则发送消息进行提醒
+                    * */
                     DeviceData deviceData = new DeviceData();
                     deviceData = (DeviceData) JsonUtil.JsonToObject(new String(Base64Utils.decodeFromString(playload), "utf-8"), DeviceData.class);
 
@@ -62,8 +79,9 @@ public class MessageHandlerJob {
                     deviceInterfaceData.setDataId(UidUtils.getUid());
                     deviceInterfaceData.setDeviceInterfaceId(deviceData.getInterfaces());
                     deviceInterfaceData.setDeviceInerfaceData(deviceData.getMessage());
-
-                    deviceInterfaceDataService.insertInterfaceData(deviceInterfaceData);
+                     deviceInterfaceDataService.insertInterfaceData(deviceInterfaceData);
+                    //检测数据是否达到报警条件
+                    deviceAlertService.checkAlertDataIsSuccesss( deviceData.getInterfaces(),deviceData.getMessage());
                 }
 
             } catch (IOException e) {

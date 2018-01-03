@@ -38,7 +38,11 @@ public interface Status{
 
 }
 
+//测试的邮箱账号
+    public interface MailTest{
 
+        String testAccount = "17702780314@163.com";
 
+}
 
 }

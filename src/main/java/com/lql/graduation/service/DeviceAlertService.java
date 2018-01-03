@@ -13,6 +13,8 @@ public interface DeviceAlertService {
     List<DeviceAlert> showDeviceAlertListByStatus(Integer status);
 
     List<DeviceAlert> queryDeviceAlertListByInterId(String deviceInerfaceData);
+
+    void checkAlertDataIsSuccesss(String interfaces, String message);
 }
 
 

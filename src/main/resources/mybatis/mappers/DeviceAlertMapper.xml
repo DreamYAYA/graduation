@@ -177,4 +177,13 @@
     where DEVICE_ALERT_STATUS = #{status}
   </select>
 
+  <select id="queryDeviceAlertByInterfaceId" parameterType="string" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from DEVICE_ALERT
+    where DEVICE_INTERFACE_ID = #{deviceAlertInterfaceId} AND DEVICE_ALERT_STATUS = 1
+
+  </select>
+
+
 </mapper>
