@@ -19,7 +19,7 @@ import java.util.Date;
 
 /**
  *
- *定时器类执行的任务类
+ *添加的设备的定时任务的到时的执行类
  */
 @Component
 public class TimerJob implements Job {
@@ -37,19 +37,21 @@ public class TimerJob implements Job {
 
         JobDataMap dataMap = jobExecutionContext.getJobDetail().getJobDataMap();
         String timerId = dataMap.getString("timerId");
+        deviceTimerService = (DeviceTimerService) dataMap.get("deviceTimerService");
+        deviceService = (DeviceService) dataMap.get("deviceService");
+        sendMessageService = (SendMessageService) dataMap.get("sendMessageService");
 
         DeviceTimer deviceTimer = deviceTimerService.findDeviceTimerById(timerId);
         //获取发送的命令
         String deviceTimerMes = deviceTimer.getDeviceTimerMes();
         //获取发送的设备的对象
-        String deviceId = deviceTimer.getDeviceId();
+        String deviceId = deviceTimer.getDeviceTimerTode();
 
         Device device = deviceService.findDeviceById(deviceId);
 
         if(device==null){
 
             throw new RuntimeException("获取设备失败");
-
         }
         Boolean success = sendMessageService.sendDeviceMessage(device.getDeviceName(), deviceTimerMes, "get");
 
@@ -60,8 +62,4 @@ public class TimerJob implements Job {
         }
         System.out.println(timerId);
     }
-
-
-
-
 }

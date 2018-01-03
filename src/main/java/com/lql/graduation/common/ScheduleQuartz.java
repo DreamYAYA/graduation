@@ -1,4 +1,9 @@
 package com.lql.graduation.common;
+import com.lql.graduation.mapper.DeviceTimerMapper;
+import com.lql.graduation.pojo.Scheduler.TimerJob;
+import com.lql.graduation.service.DeviceService;
+import com.lql.graduation.service.DeviceTimerService;
+import com.lql.graduation.service.SendMessageService;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -8,6 +13,13 @@ public class ScheduleQuartz {
 
     @Autowired
     private Scheduler scheduler;
+
+    @Autowired
+    private DeviceTimerService deviceTimerService;
+    @Autowired
+    private DeviceService deviceService;
+    @Autowired
+    private SendMessageService sendMessageService;
 
     /**
      * @Description: 添加一个定时任务
@@ -22,10 +34,15 @@ public class ScheduleQuartz {
     @SuppressWarnings({ "unchecked", "rawtypes" })
     public void addJob(String jobName, String jobGroupName,
                        String triggerName, String triggerGroupName, Class jobClass, String cron,String timerId) {
+
+
         try {
             // 任务名，任务组，任务执行类
             JobDetail jobDetail= JobBuilder.newJob(jobClass).withIdentity(jobName, jobGroupName).build();
             jobDetail.getJobDataMap().put("timerId", timerId);
+            jobDetail.getJobDataMap().put("deviceTimerService", deviceTimerService);
+            jobDetail.getJobDataMap().put("deviceService", deviceService);
+            jobDetail.getJobDataMap().put("sendMessageService", sendMessageService);
             // 触发器
             TriggerBuilder<Trigger> triggerBuilder = TriggerBuilder.newTrigger();
             // 触发器名,触发器组
