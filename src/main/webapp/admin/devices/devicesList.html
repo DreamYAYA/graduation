@@ -9,8 +9,8 @@
 	 <section class="content" style="background:#fff;">
 		 <div class="box">
  	<div class="box-body" >
- 		<table class="table table-hover">
-
+ 		<table id = "example2"class="table table-bordered table-hover">
+			<thead>
 		<tr>
     		<th>ID</th>
     		<th>名称</th>
@@ -21,8 +21,8 @@
     		<th>编辑</th>
     		<th>控制模式</th>
   		</tr>
-
-
+			</thead>
+			<tbody>
   		<tr ng-repeat=" device in devices">
     		<td>{{device.deviceId}}</td>
    		 	<td>{{device.deviceName}}</td>
@@ -33,7 +33,7 @@
    		 	<td>编辑</td>
    		 	<td>控制模式</td>
   		</tr>
-
+			</tbody>
          </table>
 	</div>
 		 </div>
