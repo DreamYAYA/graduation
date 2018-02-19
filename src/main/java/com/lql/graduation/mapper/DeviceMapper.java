@@ -26,4 +26,6 @@ public interface DeviceMapper {
     Device findDeviceByName(String deviceName);
 
     List<Device> selectDeviceByIsOnlineStatus(Integer status);
+
+    int selectDeviceCount();
 }

@@ -56,4 +56,6 @@ public interface DeviceInterfaceMapper {
     int updateByPrimaryKey(DeviceInterface record);
 
     List<DeviceInterface> selectByStatus(Integer status);
+
+    int selectDeviceInterfaceCount();
 }
