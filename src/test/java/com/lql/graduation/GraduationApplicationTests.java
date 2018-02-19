@@ -211,4 +211,11 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 
 	}
 
+	@Test
+	public void tests(){
+
+		System.out.println((0^1)+"");
+		System.out.println((1^1)+"");
+	}
+
 }
