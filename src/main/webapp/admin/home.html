@@ -347,7 +347,7 @@
             </span>
 						</a>
 						<ul class="treeview-menu">
-							<li class="active"><a href="#/"><i class="fa fa-circle-o"></i> 设备列表</a></li>
+							<li class="active"><a href="#/deviceList"><i class="fa fa-circle-o"></i> 设备列表</a></li>
 							<li ><a href="#/devicesController"><i class="fa fa-circle-o"></i> 设备遥控</a></li>
 							<li ><a href="#/addDevices"><i class="fa fa-circle-o"></i> 添加设备</a></li>
 						</ul>
@@ -404,7 +404,7 @@
             var app = angular.module('myApp',['ngRoute','ngAnimate']);
             app.config(['$routeProvider', function($routeProvider){
                 $routeProvider
-                .when('/',{templateUrl:'devices/devicesList.html',controller:'deviceListController'})
+                .when('/deviceList',{templateUrl:'devices/devicesList.html',controller:'deviceListController'})
                 .when('/devicesController',{templateUrl:'devices/devicesController.html',controller:'devicesController'})
                 .when('/addDevices',{templateUrl:'devices/addDevices.html',controller:'addDeviceController'})
                 .when('/alertList',{templateUrl:'timers/alertList.html',controller:'alertListController'})
@@ -413,7 +413,7 @@
                 .when('/addTimer',{templateUrl:'timers/addTimer.html',controller:'addTimerController'})
                 .when('/mathLists',{templateUrl:'mathInterface/mathtList.html',controller:'mathInterfaceListController'})
                 .when('/addMath',{templateUrl:'mathInterface/addMath.html'})
-                .otherwise({redirectTo:'/'});
+                .otherwise({redirectTo:'/',templateUrl:'homList.html',controller:'homeListController'});
             }]);
             //自定义过滤器
             app.filter('isOnline', function() {
@@ -443,7 +443,41 @@
                     return text;
                 }
             });
+			//启用禁用过滤器
+            app.filter('startClass', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='0'){
 
+                        text = text.replace("0","btn-success");
+
+
+                    }else if(text='1'){
+
+                        text = text.replace("1","btn-danger");
+
+                        // text.insertAfter("<button type=\"button\" class=\"btn btn-success btn-xs\">禁止</button>");
+                    }
+                    return text;
+                }
+            });			//启用禁用过滤器
+            app.filter('startText', function() {
+                return function(text) {
+                    var text = text+"";
+                    if(text=='0'){
+
+                        text = text.replace("0","启用");
+
+
+                    }else if(text='1'){
+
+                        text = text.replace("1","禁用");
+
+                        // text.insertAfter("<button type=\"button\" class=\"btn btn-success btn-xs\">禁止</button>");
+                    }
+                    return text;
+                }
+            });
             //符号过滤器
             app.filter('component', function() {
                 return function(text) {
@@ -510,8 +544,29 @@
                 }
             });
 
+
+            //主页Dashbord
+            app.controller("homeListController",function ($scope, $http) {
+
+                $scope.$on("$routeChangeSuccess",function(){
+
+                    //跳转成功后触发该函数
+                    console.log("ng-view content loaded!");
+
+                			//请求几个模块的数据统计结果
+                    $http.get("/index/getModuleCount")
+                        .success(function (response) {
+
+                            $scope.intelligentDevice=response.data.deviceCount;
+                            $scope.mathInterface = response.data.interfaceCount;
+                            $scope.alertTip = response.data.alertCount;
+
+                        });
+                        });
+
+            })
 			//设备列表
-            app.controller("deviceListController",function ($scope, $http) {
+            app.controller("deviceListController",function ($scope, $http, $window) {
 
                 $scope.$on("$routeChangeSuccess",function(){
 
@@ -526,6 +581,29 @@
 
 						});
                 });
+
+                $scope.reverseStatus = function (deviceId) {
+
+					//加载框开始
+                    $(".loadEffect").show();
+                    //请求数据
+                    $http({
+                        method: 'GET',
+                        url: '/device/alertStatus',
+                        params:{'deviceId':deviceId}
+                    }).success(function (response) {
+                        var status = response.status;
+                        if(status==0){
+                            $window.location.reload();
+
+                        }else{
+                            alert("添加设备出错了");
+                        }
+
+                    });
+					//加载框结束
+                }
+
             })
 
 			//添加设备
@@ -570,7 +648,7 @@
 
             //设备控制
 			app.controller("devicesController",function ($scope,$http) {
-
+                $scope.targetDevice = "1";
 			    //查询在线的设备列表
                 $http({
                     method: 'GET',
@@ -612,6 +690,10 @@
 			//添加数据接口
 			app.controller("addMathInterfaceController",function ($scope,$http) {
 
+				$scope.interfaceType = "1";
+
+
+
                 //查询所有的设备
                 $http({
                     method: 'GET',
@@ -620,6 +702,7 @@
                     var status = response.status;
                     if(status==0){
                         $scope.devices = response.data;
+                        $scope.deviceId = response.data[0].deviceId;
                     }else{
                         alert("查询设备出错了");
                     }
@@ -714,7 +797,8 @@
             //添加报警
             app.controller('addAlertController',function ($scope,$http) {
 
-
+                $scope.alertTiaojian = "1";
+                $scope.alertSendMethod = "1";
                 $http({
                     method: 'GET',
                     url: '/dataInterface/list'
@@ -724,6 +808,7 @@
                     if(status==0){
 
                         $scope.interfaces = response.data;
+                        $scope.alertDataSource = response.data[0].deviceInterfaceId;
                     }else{
                         alert("查询数据接口出错");
                     }
@@ -769,6 +854,9 @@
             //添加定时器
 			app.controller('addTimerController',function ($scope,$http) {
 
+                $scope.timerWeek = "1";
+                $scope.timerHoure = "0";
+                $scope.timerMinue = "0";
 				//获取发送目标的设备数据
                 $http({
                     method: 'GET',
@@ -779,6 +867,7 @@
                     if(status==0){
 
                         $scope.devices = response.data;
+                        $scope.sendTarget = response.data[0].deviceId;
                     }else{
                         alert("查询发送设备出错");
                     }
@@ -838,17 +927,7 @@
 
                 });
             });
-            $(function () {
-                $('#deviceTable').DataTable()
-                $('#deviceTable').DataTable({
-                    'paging'      : true,
-                    'lengthChange': false,
-                    'searching'   : false,
-                    'ordering'    : true,
-                    'info'        : true,
-                    'autoWidth'   : false
-                })
-            })
+
 
         </script>
 		
