@@ -144,5 +144,25 @@ public class DeviceServiceImpl implements DeviceService{
         return ServerResponse.createByErrorMessage("发送消息失败");
     }
 
+    /**
+     *
+     * 反转设备状态
+     * @param deviceId
+     * @return
+     */
+    @Override
+    public ServerResponse reversStatus(String deviceId) {
+        try {
+            Device device = deviceMapper.selectByPrimaryKey(deviceId);
+            device.setDeviceStatue(device.getDeviceStatue()^1);
+            deviceMapper.updateByPrimaryKeySelective(device);
+            return ServerResponse.createBySuccess();
+        }catch (Exception e){
+            return ServerResponse.createByErrorMessage(e.getMessage());
+        }
+
+
+    }
+
 
 }

@@ -20,4 +20,7 @@ public interface DeviceService {
     List<Device> onlineDeviceList(Integer status);
         //发送消息至设备
     ServerResponse sendMessageToDevice(String deviceId, String controllerMsg);
+
+
+    ServerResponse reversStatus(String deviceId);
 }

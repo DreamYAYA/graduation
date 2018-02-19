@@ -74,4 +74,18 @@ public class DeviceController {
             return sendStatue;
        }
 
+    /**
+     *
+     *反转设备禁用启用状态
+     * @param deviceId 设备ID GUID
+     * @return
+     */
+    @RequestMapping("/alertStatus")
+    @ResponseBody
+       public ServerResponse reverStatus(String deviceId){
+
+        ServerResponse res= deviceService.reversStatus(deviceId);
+            return res;
+       }
+
 }
