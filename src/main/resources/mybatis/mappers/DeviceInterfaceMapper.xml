@@ -217,5 +217,10 @@
 
   </select>
 
+  <select id="selectDeviceInterfaceCount"  resultType="int">
+    SELECT COUNT(*)     from DEVICE_INTERFACE
+    where DEVICE_INTERFACE_STATUS = 1
+  </select>
+
 
 </mapper>

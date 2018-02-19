@@ -231,5 +231,9 @@
     from DEVICE WHERE DEVICE_ISONLINE = #{status}
   </select>
 
+  <select id="selectDeviceCount"  resultType="int">
+SELECT COUNT(*) FROM DEVICE WHERE DEVICE_STATUE=1
+  </select>
+
 
 </mapper>

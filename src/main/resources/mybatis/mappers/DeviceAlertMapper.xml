@@ -185,5 +185,9 @@
 
   </select>
 
+  <select id="selectDeviceAlertCount"  resultType="int">
+ SELECT COUNT(*) FROM DEVICE_ALERT WHERE DEVICE_ALERT_STATUS=1
+  </select>
+
 
 </mapper>
