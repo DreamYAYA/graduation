@@ -6,6 +6,7 @@ import com.lql.graduation.pojo.DeviceAlert;
 import com.lql.graduation.service.DeviceAlertService;
 import com.lql.graduation.util.Constant;
 import com.lql.graduation.util.ResponseCode;
+import com.lql.graduation.util.ServerResponse;
 import com.lql.graduation.util.UidUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,6 +26,7 @@ public class DeviceAlertServiceImpl implements DeviceAlertService{
 
             String AlertId = UidUtils.getUid();
             deviceAlert.setDeviceAlertId(AlertId);
+            deviceAlert.setDeviceAlertStatus(Constant.Status.OK_STATUS+"");
             //创建时间
             deviceAlert.setCreateTime(new Date());
             deviceAlert.setUpdateTime(new Date());
@@ -97,8 +99,33 @@ public class DeviceAlertServiceImpl implements DeviceAlertService{
         }
     }
 
+    @Override
+    public ServerResponse getDeviceAlert(String id) {
 
-private Integer StringToInteger(String intValue){
+        try{
+
+        DeviceAlert deviceAlert = deviceAlertMapper.selectByPrimaryKey(id);
+        return ServerResponse.createBySuccessMessage(deviceAlert);
+        }catch (Exception e){
+            return ServerResponse.createByErrorMessage(e.getMessage());
+        }
+
+    }
+
+    @Override
+    public ServerResponse updateDeviceAlert(DeviceAlert deviceAlert) {
+        try{
+
+            deviceAlertMapper.updateByPrimaryKeySelective(deviceAlert);
+            return ServerResponse.createBySuccessMessage("success");
+        }catch (Exception e){
+            return ServerResponse.createByErrorMessage(e.getMessage());
+        }
+
+    }
+
+
+    private Integer StringToInteger(String intValue){
 
 return Integer.parseInt(intValue);
 }

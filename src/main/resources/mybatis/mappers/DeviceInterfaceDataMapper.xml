@@ -7,22 +7,22 @@
     <result column="DEVICE_INERFACE_DATA" jdbcType="VARCHAR" property="deviceInerfaceData" />
   </resultMap>
   <sql id="Base_Column_List">
-    DATA_ID, DEVICE_INTERFACE_ID, DEVICE_INERFACE_DATA
+    DATA_ID, DEVICE_INTERFACE_ID, DEVICE_INERFACE_DATA,DATA_TIME
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from DEVICE_INTERFACE_DATA
-    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+    where DATA_ID = #{dataId,jdbcType=INTEGER}
   </select>
-  <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
+  <delete id="deleteByPrimaryKey" parameterType="int">
     delete from DEVICE_INTERFACE_DATA
-    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+    where DATA_ID = #{dataId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.lql.graduation.pojo.DeviceInterfaceData">
-    insert into DEVICE_INTERFACE_DATA (DATA_ID, DEVICE_INTERFACE_ID, DEVICE_INERFACE_DATA
+    insert into DEVICE_INTERFACE_DATA (DATA_ID, DEVICE_INTERFACE_ID, DEVICE_INERFACE_DATA,DATA_TIME
       )
-    values (#{dataId,jdbcType=VARCHAR}, #{deviceInterfaceId,jdbcType=VARCHAR}, #{deviceInerfaceData,jdbcType=VARCHAR}
+    values (#{dataId,jdbcType=INTEGER}, #{deviceInterfaceId,jdbcType=VARCHAR}, #{deviceInerfaceData,jdbcType=VARCHAR},#{dataTime,jdbcType=TIMESTAMP}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.lql.graduation.pojo.DeviceInterfaceData">
@@ -37,16 +37,22 @@
       <if test="deviceInerfaceData != null">
         DEVICE_INERFACE_DATA,
       </if>
+      <if test="dataTime != null">
+        DATA_TIME,
+      </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="dataId != null">
-        #{dataId,jdbcType=VARCHAR},
+        #{dataId,jdbcType=INTEGER},
       </if>
       <if test="deviceInterfaceId != null">
         #{deviceInterfaceId,jdbcType=VARCHAR},
       </if>
       <if test="deviceInerfaceData != null">
         #{deviceInerfaceData,jdbcType=VARCHAR},
+      </if>
+      <if test="dataTime != null">
+        #{dataTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>
@@ -60,12 +66,19 @@
         DEVICE_INERFACE_DATA = #{deviceInerfaceData,jdbcType=VARCHAR},
       </if>
     </set>
-    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+    where DATA_ID = #{dataId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lql.graduation.pojo.DeviceInterfaceData">
     update DEVICE_INTERFACE_DATA
     set DEVICE_INTERFACE_ID = #{deviceInterfaceId,jdbcType=VARCHAR},
       DEVICE_INERFACE_DATA = #{deviceInerfaceData,jdbcType=VARCHAR}
-    where DATA_ID = #{dataId,jdbcType=VARCHAR}
+    where DATA_ID = #{dataId,jdbcType=INTEGER}
   </update>
+  
+  
+  <select id="selectInterfaceData" resultType="com.lql.graduation.pojo.DeviceInterfaceData" parameterType="com.lql.graduation.pojo.DeviceInterface">
+
+SELECT <include refid="Base_Column_List" /> FROM  DEVICE_INTERFACE_DATA WHERE  DEVICE_INTERFACE_ID = #{deviceInterfaceId,jdbcType=VARCHAR}
+
+  </select>
 </mapper>

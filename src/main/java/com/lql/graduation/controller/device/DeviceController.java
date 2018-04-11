@@ -69,9 +69,10 @@ public class DeviceController {
        @ResponseBody
        public ServerResponse SendMessageToDevice(String DeviceId,String controllerMsg){
 
-
            ServerResponse sendStatue = deviceService.sendMessageToDevice(DeviceId,controllerMsg);
-            return sendStatue;
+           return sendStatue;
+
+
        }
 
     /**

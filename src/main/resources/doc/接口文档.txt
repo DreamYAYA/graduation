@@ -11,9 +11,9 @@ data=
 设备上下线
 data=
 {
-    "status":"online"(或offline),//设备状态
-    "productKey":"xxxxxxxxxxx",//产品标识
-    "deviceName":"xxxxxxxxxx",//设备标识
+    "status":"online",//设备状态
+    "productKey":"19bf44aa91f34977b7fe466e34f3ccc8",//产品标识
+    "deviceName":"device3",//设备标识
     "time":"2017-10-11 10:11:12.234", //发送通知时间点
     "lastTime":"2017-10-11 10:11:12.123" //状态变更时最后一次通信时间
     "clientIp":"xxx.xxx.xxx.xxx" //设备端公网出口IP

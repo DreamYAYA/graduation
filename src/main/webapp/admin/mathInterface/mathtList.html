@@ -27,8 +27,13 @@
    		 	<td>{{interface.deviceId}}</td>
    		 	<td>{{interface.deviceInterfaceType|interfaceType}}</td>
    		 	<td>{{interface.updateTimer|date:'yyyy-MM-dd HH:mm' }}</td>
-   		 	<td>编辑</td>
-   		 	<td>数据查看</td>
+   		 	<td> <!-- 按钮触发模态框 -->
+				<button class="btn btn-primary btn-sm" ng-click="updateModelshow(interface.deviceInterfaceId)">
+					编辑
+				</button></td>
+   		 	<td><button class="btn btn-primary btn-sm" ng-click="checkData(interface.deviceInterfaceId)">
+				查看数据
+			</button></td></td>
   		</tr>
 
          </table>
@@ -41,8 +46,10 @@
  		
  		
  	</div>
- 	
- 	
- 	
- 	
+
+
+
+
  </div>
+
+

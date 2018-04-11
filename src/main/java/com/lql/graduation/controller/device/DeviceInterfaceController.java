@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -43,8 +44,34 @@ public class DeviceInterfaceController {
 
     }
 
+    /**
+     * 根据ID获取接口数据
+     * @param id
+     * @return
+     */
+    @RequestMapping("/get")
+    @ResponseBody
+    public ServerResponse getDeviceInterfaceById(Integer id){
 
+        ServerResponse serverResponse = deviceInterfaceService.getDeviceInterfaceById(id);
+            return serverResponse;
+    }
 
+        @RequestMapping("/update")
+         @ResponseBody
+        public ServerResponse updataInterface(DeviceInterface deviceInterface){
+            deviceInterface.setUpdateTimer(new Date());
+            ServerResponse serverResponse = deviceInterfaceService.updateInterface(deviceInterface);
+            return serverResponse;
+        }
+
+        @RequestMapping("/getValue")
+        @ResponseBody
+        public ServerResponse getIntefaceValue(DeviceInterface deviceInterface){
+
+            ServerResponse serverResponse = deviceInterfaceService.getInterfaceValue(deviceInterface);
+            return serverResponse;
+        }
 
 
 

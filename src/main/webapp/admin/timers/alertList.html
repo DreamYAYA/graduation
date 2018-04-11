@@ -27,7 +27,9 @@
    		 	<td>x{{alert.deviceAlertVal|component}}{{alert.deviceValue}}</td>
    		 	<td>{{alert.deviceAlertSendmethod|sendMethod}}</td>
    		 	<td>{{alert.deviceAlertStatus|alertStatue}}</td>
-   		 	<td>编辑</td>
+   		 	<td><button class="btn btn-primary btn-sm" ng-click="updateAlert(alert.deviceAlertId)">
+				编辑
+			</button></td>
    		 
    		 	
   		</tr>

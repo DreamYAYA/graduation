@@ -17,8 +17,13 @@ import com.lql.graduation.pojo.Scheduler.ScheduleJob;
 import com.lql.graduation.pojo.Scheduler.TimerJob;
 import com.lql.graduation.pojo.User;
 import com.lql.graduation.service.SendMessageService;
+import com.lql.graduation.service.serviceImpl.MessageSend;
 import com.lql.graduation.spring.config.GraduationApplication;
 import com.lql.graduation.util.JsonUtil;
+import com.lql.graduation.util.RedisUtil;
+import org.apache.activemq.command.ActiveMQQueue;
+import org.apache.activemq.command.ActiveMQTopic;
+import org.eclipse.paho.client.mqttv3.*;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.quartz.Scheduler;
@@ -28,13 +33,17 @@ import org.quartz.impl.StdSchedulerFactory;
 import org.quartz.impl.triggers.CronTriggerImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.jms.core.JmsMessagingTemplate;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.util.Base64Utils;
 
+import javax.jms.Destination;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.Base64;
 import java.util.Date;
 
@@ -46,10 +55,12 @@ public class GraduationApplicationTests {
 	public UserMapper userMapper;
 	@Autowired
 	private JavaMailSender mailSender;
-
+	@Autowired
+	private MessageSend messageSend;
 	@Autowired
 	private Mail mail;
-
+	@Autowired
+	private RedisUtil redisUtil;
 	@Autowired
 	private ScheduleQuartz quartzManager;
 
@@ -217,5 +228,65 @@ String payload = "6KaB5Y+R6YCB55qE5pWw5o2u5YaF5a65LCDov5nkuKrlhoXlrrnlj6/ku6XmmK
 		System.out.println((0^1)+"");
 		System.out.println((1^1)+"");
 	}
+
+	@Test
+	public void testActiveMQ(){
+		Destination topic = new ActiveMQTopic("mytest.queue");
+			messageSend.send("myname is chhliu!!!");
+
+	}
+
+	@Test
+	public void testRedis(){
+
+        redisUtil.set("hah12","123456");
+	}
+	@Test
+	public void testRedisGet(){
+
+		String hah = redisUtil.get("hah12");
+		System.out.println(hah);
+	}
+	@Test
+	public void StringEncode() throws UnsupportedEncodingException {
+			String aa = new String( "{\n" +
+					"\t\"status\": \"online\", \n" +
+					"\t\"productKey\": \"19bf44aa91f34977b7fe466e34f3ccc8\", \n" +
+					"\t\"deviceName\": \"device3\", \n" +
+					"\t\"time\": \"2017-10-11 10:11:12.234\",\n" +
+					"\t\"lastTime\": \"2017-10-11 10:11:12.123\"\n" +
+					"\t\"clientIp\": \"xxx.xxx.xxx.xxx\"\n" +
+					"}");
+		byte[] a =aa.getBytes("UTF-8");
+		Base64.Encoder encoder = Base64.getEncoder();
+		String encodedText = encoder.encodeToString(a);
+		System.out.println(encodedText);
+	}
+
+@Test
+		public void testLocalDataTime(){
+
+	LocalDateTime parse = LocalDateTime.parse("2018-04-10T15:39:05.535");
+	LocalDateTime time = LocalDateTime.now();
+    Duration between = Duration.between(parse, time);
+    System.out.println(between.toMinutes());
+		}
+
+    @Autowired
+    private JmsMessagingTemplate jmsMessagingTemplate;
+    @Autowired
+    private MqttClient MqttClient;
+    @Autowired
+    private MqttMessage message;
+	@Test
+	public void testSendMessageToTopic() throws MqttException {
+
+        MqttTopic topic =  MqttClient.getTopic("device/1/get");
+        message.setPayload("hell".getBytes());
+        MqttDeliveryToken token = topic.publish(message);
+        // 发布
+        token.waitForCompletion();
+
+    }
 
 }

@@ -33,15 +33,30 @@ public class DeviceAlertController {
     @RequestMapping("/list")
     @ResponseBody
     public ServerResponse DeviceAlertList(){
-
-
-
         List<DeviceAlert> deviceAlertList = deviceAlertService.showDeviceAlertListByStatus(Constant.Status.OK_STATUS);
-
-
-
          return ServerResponse.createBySuccessMessage(deviceAlertList);
     }
+
+
+    @RequestMapping("/get")
+    @ResponseBody
+    public ServerResponse  getDeviceAlert(String id){
+
+        ServerResponse serverResponse = deviceAlertService.getDeviceAlert(id);
+        return serverResponse;
+
+    }
+    @RequestMapping("/update")
+    @ResponseBody
+    public ServerResponse saveDeviceAlert(DeviceAlert deviceAlert){
+
+
+        ServerResponse serverResponse = deviceAlertService.updateDeviceAlert(deviceAlert);
+        return serverResponse;
+    }
+
+
+
 
 
 

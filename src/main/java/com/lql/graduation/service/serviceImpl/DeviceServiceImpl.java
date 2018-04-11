@@ -20,9 +20,11 @@ public class DeviceServiceImpl implements DeviceService{
     private DeviceMapper deviceMapper;
     @Autowired
     private SendMessageService sendMessageService;
-    private final static String DEVICE_ONLINE = "online";
-    private final static String DEVICE_OFFLINE = "offline";
-
+    private final static String DEVICE_ONLINE = "o";
+    private final static String DEVICE_OFFLINE = "of";
+    private final static String ONLINE_DEVICE = "onlineDevice";
+    @Autowired
+    private RedisUtil redisUtil;
 
     /**
      *
@@ -32,30 +34,16 @@ public class DeviceServiceImpl implements DeviceService{
      * @return
      */
     public Integer addDevice(Device device,String Uid) {
-
-        String deviceID = UidUtils.getUid();
-        device.setDeviceId(deviceID);
-
-        //初始化设备的各项参数
-        device.setCrateBy(Uid);
-        device.setCreatTime(new Date());
-        device.setDeviceStatue(Constant.Device.DEVICE_STATUS_OK);
-        //在线时长
-        device.setDeviceTime(0);
-        device.setDeviceIsonline(Constant.Device.DEVICE_OFF);
-
-        try {
-            aliDevice aDevice = new aliDevice();
-            RegistDeviceResponse resp = aDevice.CreateDeviceInIot(device.getDeviceName());
-            if(resp.getSuccess()){
-                device.setApikey(resp.getDeviceId());
-                device.setApiscreat(resp.getDeviceSecret());
-                deviceMapper.insert(device);
-
-                return ResponseCode.SUCCESS.getCode();
-                }else{
-                throw new RuntimeException(resp.getErrorMessage());
-            }
+        try{
+            //初始化设备的各项参数
+            device.setCrateBy(Uid);
+            device.setCreatTime(new Date());
+            device.setDeviceStatue(Constant.Device.DEVICE_STATUS_OK);
+            //在线时长
+            device.setDeviceTime(0);
+            device.setDeviceIsonline(Constant.Device.DEVICE_OFF);
+            deviceMapper.insert(device);
+            return ResponseCode.SUCCESS.getCode();
         }catch (Exception e){
             e.printStackTrace();
             return ResponseCode.ERROR.getCode();
@@ -82,12 +70,17 @@ public class DeviceServiceImpl implements DeviceService{
      */
     public Integer updateDevice(DataBean deviceData) {
         String deviceName = deviceData.getDeviceName();
-        Device device = deviceMapper.findDeviceByName(deviceName);
-
-        if(DEVICE_ONLINE.equals(deviceData.getStatus())){
+        Device device = deviceMapper.selectByPrimaryKey(Integer.parseInt(deviceData.getProductKey()));
+        if(device==null){
+                System.out.println(deviceData.getProductKey()+"设备不存在!");
+        }
+        else if(DEVICE_ONLINE.equals(deviceData.getStatus())){
             //设备在线更改设备状态，更新设备的登录时间
             device.setDeviceIsonline(Constant.Device.DEVICE_ONLINE);
             device.setUpdateTime(new Date());
+            //将设备信息写入Redis中进行在线设备的维护
+            redisUtil.hmset(ONLINE_DEVICE,deviceData.getProductKey(),deviceData.getTime());
+
         }else if(DEVICE_OFFLINE.equals(deviceData.getStatus())){
             //设备下线更改设备状态，计算设备的在线时间
             device.setDeviceIsonline(Constant.Device.DEVICE_OFF);
@@ -96,6 +89,8 @@ public class DeviceServiceImpl implements DeviceService{
             final long onlineTime = CurrentData.getTime() - OldData.getTime();
             Integer minuetime = TimeUtil.millTimeToMinue(onlineTime);
             device.setDeviceTime(device.getDeviceTime()+minuetime);
+            //设备下线时删除Redis中维护的设备
+            redisUtil.removeHset(ONLINE_DEVICE,deviceData.getProductKey());
         }
 
 
@@ -113,7 +108,7 @@ public class DeviceServiceImpl implements DeviceService{
      */
     public Device findDeviceById(String deviceId) {
 
-        Device device = deviceMapper.selectByPrimaryKey(deviceId);
+        Device device = deviceMapper.selectByPrimaryKey(Integer.parseInt(deviceId));
         return device;
     }
 
@@ -136,8 +131,7 @@ public class DeviceServiceImpl implements DeviceService{
      * @return
      */
     public ServerResponse sendMessageToDevice(String deviceId, String controllerMsg) {
-        Device device = deviceMapper.selectByPrimaryKey(deviceId);
-        Boolean success = sendMessageService.sendDeviceMessage(device.getDeviceName(), controllerMsg, "get");
+        Boolean success = sendMessageService.sendDeviceMessage(deviceId, controllerMsg, "get");
         if(success){
             return ServerResponse.createBySuccessMessage("消息发送成功");
         }
@@ -153,7 +147,7 @@ public class DeviceServiceImpl implements DeviceService{
     @Override
     public ServerResponse reversStatus(String deviceId) {
         try {
-            Device device = deviceMapper.selectByPrimaryKey(deviceId);
+            Device device = deviceMapper.selectByPrimaryKey(Integer.parseInt(deviceId));
             device.setDeviceStatue(device.getDeviceStatue()^1);
             deviceMapper.updateByPrimaryKeySelective(device);
             return ServerResponse.createBySuccess();

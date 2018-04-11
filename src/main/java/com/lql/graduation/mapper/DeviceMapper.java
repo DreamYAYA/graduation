@@ -15,7 +15,7 @@ public interface DeviceMapper {
 
     int insertSelective(Device record);
 
-    Device selectByPrimaryKey(String deviceId);
+    Device selectByPrimaryKey(Integer deviceId);
 
     int updateByPrimaryKeySelective(Device record);
 

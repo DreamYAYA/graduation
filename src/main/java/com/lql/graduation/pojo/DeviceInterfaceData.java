@@ -1,18 +1,28 @@
 package com.lql.graduation.pojo;
-
+import java.util.Date;
 public class DeviceInterfaceData {
-    private String dataId;
+    private Integer dataId;
 
     private String deviceInterfaceId;
 
     private String deviceInerfaceData;
 
-    public String getDataId() {
+    private Date  dataTime;
+
+    public Integer getDataId() {
         return dataId;
     }
 
-    public void setDataId(String dataId) {
-        this.dataId = dataId == null ? null : dataId.trim();
+    public void setDataId(Integer dataId) {
+        this.dataId = dataId;
+    }
+
+    public Date getDataTime() {
+        return dataTime;
+    }
+
+    public void setDataTime(Date dataTime) {
+        this.dataTime = dataTime;
     }
 
     public String getDeviceInterfaceId() {

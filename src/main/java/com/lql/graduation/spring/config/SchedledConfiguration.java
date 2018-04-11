@@ -37,7 +37,7 @@ public class SchedledConfiguration {
     public CronTriggerFactoryBean cronJobTrigger(MethodInvokingJobDetailFactoryBean methodInvokingJobDetailFactoryBean) {
         CronTriggerFactoryBean tigger = new CronTriggerFactoryBean();
       tigger.setJobDetail(methodInvokingJobDetailFactoryBean.getObject());
-        tigger.setCronExpression("0/2 * * * * ?");// 初始时的cron表达式  ，没5分钟执行一次
+        tigger.setCronExpression("0/0 * * * * ?");// 初始时的cron表达式  ，没5分钟执行一次
         return tigger;
     }
 
@@ -63,7 +63,7 @@ public class SchedledConfiguration {
     public ScheduleQuartz scheduleQuartz(SchedulerFactoryBean schedulerFactoryBean){
 
         ScheduleQuartz  scheduleQuartz = new ScheduleQuartz();
-        scheduleQuartz.setScheduler(schedulerFactoryBean.getScheduler());
+      //  scheduleQuartz.setScheduler(schedulerFactoryBean.getScheduler());
 
         return  scheduleQuartz;
     }

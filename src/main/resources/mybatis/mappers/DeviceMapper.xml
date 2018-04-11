@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.lql.graduation.mapper.DeviceMapper">
   <resultMap id="BaseResultMap" type="com.lql.graduation.pojo.Device">
-    <id column="DEVICE_ID" jdbcType="VARCHAR" property="deviceId" />
+    <id column="DEVICE_ID" jdbcType="INTEGER" property="deviceId" />
     <result column="USER_ID" jdbcType="VARCHAR" property="userId" />
     <result column="DEVICE_NAME" jdbcType="VARCHAR" property="deviceName" />
     <result column="APIKEY" jdbcType="VARCHAR" property="apikey" />
@@ -23,15 +23,15 @@
     DEVICE_ISPUBLIC, DEVICE_ISONLINE, DEVICE_TIME, DEVICE_STATUE, CRATE_BY, CREAT_TIME, 
     UPDATE_BY, UPDATE_TIME
   </sql>
-  <select id="selectByPrimaryKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+  <select id="selectByPrimaryKey" parameterType="int" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
     from DEVICE
-    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    where DEVICE_ID = #{deviceId,jdbcType=INTEGER}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.String">
     delete from DEVICE
-    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    where DEVICE_ID = #{deviceId,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.lql.graduation.pojo.Device">
     insert into DEVICE (DEVICE_ID, USER_ID, DEVICE_NAME, 
@@ -40,7 +40,7 @@
       DEVICE_TIME, DEVICE_STATUE, CRATE_BY, 
       CREAT_TIME, UPDATE_BY, UPDATE_TIME
       )
-    values (#{deviceId,jdbcType=VARCHAR}, #{userId,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR}, 
+    values (#{deviceId,jdbcType=INTEGER}, #{userId,jdbcType=VARCHAR}, #{deviceName,jdbcType=VARCHAR},
       #{apikey,jdbcType=VARCHAR}, #{apiscreat,jdbcType=VARCHAR}, #{deviceIntroduce,jdbcType=VARCHAR}, 
       #{deviceDescription,jdbcType=VARCHAR}, #{deviceIspublic,jdbcType=VARCHAR}, #{deviceIsonline,jdbcType=INTEGER}, 
       #{deviceTime,jdbcType=INTEGER}, #{deviceStatue,jdbcType=INTEGER}, #{crateBy,jdbcType=VARCHAR}, 
@@ -98,7 +98,7 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides=",">
       <if test="deviceId != null">
-        #{deviceId,jdbcType=VARCHAR},
+        #{deviceId,jdbcType=INTEGER},
       </if>
       <if test="userId != null">
         #{userId,jdbcType=VARCHAR},
@@ -190,7 +190,7 @@
         UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </set>
-    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    where DEVICE_ID = #{deviceId,jdbcType=INTEGER}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.lql.graduation.pojo.Device">
     update DEVICE
@@ -208,7 +208,7 @@
       CREAT_TIME = #{creatTime,jdbcType=TIMESTAMP},
       UPDATE_BY = #{updateBy,jdbcType=VARCHAR},
       UPDATE_TIME = #{updateTime,jdbcType=TIMESTAMP}
-    where DEVICE_ID = #{deviceId,jdbcType=VARCHAR}
+    where DEVICE_ID = #{deviceId,jdbcType=INTEGER}
   </update>
 
 
@@ -232,7 +232,7 @@
   </select>
 
   <select id="selectDeviceCount"  resultType="int">
-SELECT COUNT(*) FROM DEVICE WHERE DEVICE_STATUE=1
+  SELECT COUNT(*) FROM DEVICE WHERE DEVICE_STATUE=1
   </select>
 
 

@@ -12,6 +12,14 @@ public class DataBean {
     private String clientIp; //设备端公网出口IP
 
 
+    public DataBean() {
+    }
+
+    public DataBean(String status, String productKey) {
+        this.status = status;
+        this.productKey = productKey;
+    }
+
     public String getStatus() {
         return status;
     }

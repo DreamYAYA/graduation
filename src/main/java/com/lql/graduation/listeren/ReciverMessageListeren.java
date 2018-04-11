@@ -68,7 +68,6 @@ private DeviceInterfaceDataService deviceInterfaceDataService;
                                 deviceData = (DeviceData)JsonUtil.JsonToObject(new String(Base64Utils.decodeFromString(playload),"utf-8"), DeviceData.class);
 
                                 DeviceInterfaceData deviceInterfaceData = new DeviceInterfaceData();
-                                deviceInterfaceData.setDataId(UidUtils.getUid());
                                 deviceInterfaceData.setDeviceInterfaceId(deviceData.getInterfaces());
                                 deviceInterfaceData.setDeviceInerfaceData(deviceData.getMessage());
 

@@ -21,13 +21,142 @@
 		<script type="text/javascript" src="../js/angular-route.min.js" ></script>
 		<script type="text/javascript" src="../js/angular-animate.min.js"></script>
 		<script type="text/javascript" src="../js/demo.js"></script>
-
+		<script src="../js/echarts.min.js"></script>
+		<script src="../js/shine.js"></script>
 		<style>
 		</style>
 
 	</head>
 
 	<body ng-app="myApp" class="hold-transition skin-blue sidebar-mini">
+
+	<div class="modal fade" id="alertUpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×
+					</button>
+					<h4 class="modal-title" id="alertUpModalLabel">
+						接口数据
+					</h4>
+				</div>
+				<div class="modal-body">
+					<form>
+						<div class="form-group">
+							<label for="alertName" style="font-weight: normal;">报警名称</label>
+							<input type="text" class="form-control" id="alertName" ng-model="alertName"/>
+						</div>
+						报警条件：(x - 来自接口数据)
+						<div class="row">
+
+							<div class="col-md-3">
+
+								<select class="form-control" id="alertTiaojian">
+									<option value="1">&gt;</option>
+									<option value="2">=</option>
+									<option value="3">&lt;</option>
+									<option value="4">&gt;=</option>
+									<option value="5">&lt;=</option>
+									<option value="6">!=</option>
+								</select>
+
+							</div>
+
+							<div class="col-md-3">
+								<input class="form-control" type="text" placeholder="Default input" id="alertTJValue"/>
+							</div>
+						</div>
+					</form>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary" id="saveAlertUp">
+						提交更改
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+	<div class="modal fade" id="chartDataModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×
+					</button>
+					<h4 class="modal-title" id="chartDataModalLabel">
+						接口数据
+					</h4>
+				</div>
+				<div class="modal-body">
+					<div id="main" style="width: 600px;height:400px;"></div>
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary">
+						提交更改
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+	<!-- 模态框（Modal） -->
+	<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+							aria-hidden="true">×
+					</button>
+					<h4 class="modal-title" id="myModalLabel">
+						修改接口
+					</h4>
+				</div>
+
+				<div class="modal-body">
+
+					<div class="box-body .container">
+
+						<form>
+
+							<div class="form-group">
+								<label for="exampleInputEmail1" style="font-weight: normal;">接口名称：</label>
+								<input type="text" class="form-control" id="exampleInputEmail1" />
+							</div>
+
+							<div class="form-group">
+								<label for="exampleInputEmail1" style="font-weight: normal;">接口描述：</label>
+								<textarea  id="interfaceDescribtion" class="form-control" rows="3" ng-model="interfaceDescription"></textarea>
+							</div>
+						</form>
+
+					</div>
+				</div>
+
+
+				<div class="modal-footer">
+					<button type="button" class="btn btn-default"
+							data-dismiss="modal">关闭
+					</button>
+					<button type="button" class="btn btn-primary" id="saveUpdateInterface">
+						提交更改
+					</button>
+				</div>
+			</div><!-- /.modal-content -->
+		</div><!-- /.modal-dialog -->
+	</div><!-- /.modal -->
+
+
+
 	<div class="wrapper">
 	<header class="main-header">
 
@@ -750,11 +879,80 @@
                 }
             });
 
-
 			//查询接口列表
 
-            app.controller('mathInterfaceListController',function ($scope,$http) {
+            app.controller('mathInterfaceListController',function ($scope,$http,$route) {
 
+                // 基于准备好的dom，初始化echarts实例
+                var myChart = echarts.init(document.getElementById('main'),'shine');
+
+                // 指定图表的配置项和数据
+                var option = {
+                    xAxis: {
+                        type: 'category',
+                        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+                    },
+                    yAxis: {
+                        type: 'value'
+                    },
+                    series: [{
+                        data: [820, 932, 901, 934, 1290, 1330, 1320],
+                        type: 'line'
+                    }]
+                };
+                myChart.setOption(option);
+
+                $scope.checkData = function (id) {
+                    var mathInterfaceId = id;
+                    $('#chartDataModal').modal({
+                        keyboard: true
+                    })
+                    //发送ajax请求获取接口数据
+                    $.post("/dataInterface/getValue", { "deviceInterfaceId": mathInterfaceId},
+                        function(data){
+                            myChart.setOption({
+                                xAxis: {
+                                    data: data.data.category
+                                },
+                                series: [{
+                                    // 根据名字对应到相应的系列
+                                    data: data.data.datas
+                                }]
+                            });
+                        }, "json");
+
+                }
+                $scope.updateModelshow = function (id){
+						var mathInterfaceId = id;
+                    $('#myModal').modal({
+                        keyboard: true
+                    })
+					//发送ajax请求获取接口数据
+                    $.post("/dataInterface/get", { "id": mathInterfaceId},
+                        function(data){
+                            $('#exampleInputEmail1').val(data.data.deviceInterfaceName)
+                            $('#interfaceDescribtion').val(data.data.deviceIntefaceDes) ;
+                        }, "json");
+
+                    $('#saveUpdateInterface').click(function () {
+                        var interfaceName = $('#exampleInputEmail1').val();
+                        var interfaceDescribtion = $('#interfaceDescribtion').val() ;
+                        //发送ajax保存修改数据
+                        $.post("/dataInterface/update", { "deviceInterfaceId": mathInterfaceId,"deviceInterfaceName": interfaceName,"deviceIntefaceDes": interfaceDescribtion},
+                            function(data){
+								if(data.status==0){
+                                    $route.reload();
+                                    $('#myModal').modal('hide');
+                                    alert("修改成功");
+
+								}else{
+                                    alert("修改失败");
+								}
+
+                            }, "json");
+                    });
+
+				}
                 $http({
                     method: 'GET',
                     url: '/dataInterface/list'
@@ -771,12 +969,68 @@
             });
 
             //报警列表查询
-			app.controller('alertListController',function ($scope,$http) {
+			app.controller('alertListController',function ($scope,$http,$route) {
+
+                $scope.updateAlert = function (id) {
+					var alertId = id;
+                    $('#alertUpModal').modal({
+                        keyboard: true
+                    })
+                    $http({
+                        method: 'POST',
+                        url: '/alert/get',
+                        params:{
+                            'id':alertId
+                        }
+                    }).success(function (response) {
+
+                        var status = response.status;
+                        if(status==0){
+							$('#alertName').val(response.data.deviceAlertName);
+                            $('#alertTiaojian').val(response.data.deviceAlertVal);
+                            $('#alertTJValue').val(response.data.deviceValue)
+                        }else{
+                            alert("查询报警接口出错");
+                        }
+
+                    });
+                    $('#saveAlertUp').click(function () {
+
+                        var alertName = $('#alertName').val();
+                        var alertTiaojian = $('#alertTiaojian').val();
+                        var alertTJValue = $('#alertTJValue').val();
+
+                        $http({
+                            method: 'POST',
+                            url: '/alert/update',
+                            params:{
+                                'deviceAlertName':alertName,
+                                'deviceAlertId':alertId,
+                                'deviceAlertVal':alertTiaojian,
+                                'deviceValue':alertTJValue
+                            }
+                        }).success(function (response) {
+
+                            var status = response.status;
+                            if(status==0){
+
+                                $('#alertUpModal').modal('hide');
+                                alert("修改成功!");
+                                $route.reload();
+                            }else{
+                                alert("修改失败!");
+                            }
+
+                        });
+                    });
+
+                }
 
 
                 $http({
                     method: 'GET',
-                    url: '/alert/list'
+                    url: '/alert/list',
+
                 }).success(function (response) {
 
                     var status = response.status;

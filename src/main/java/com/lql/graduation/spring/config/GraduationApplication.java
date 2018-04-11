@@ -12,7 +12,7 @@ import javax.sql.DataSource;
 
 
 @Configuration
-@PropertySource(value = {"classpath:jdbc.properties"})
+@PropertySource(value = {"classpath:jdbc.properties","classpath:subcribtion.properties"})
 @ComponentScan(basePackages="com.lql.graduation")
 @SpringBootApplication
 public class GraduationApplication extends SpringBootServletInitializer{

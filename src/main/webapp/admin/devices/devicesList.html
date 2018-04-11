@@ -14,24 +14,20 @@
 		<tr>
     		<th>ID</th>
     		<th>名称</th>
-    		<th>APIKEY</th>
     		<th>是否开放</th>
     		<th>在线状态</th>
     		<th>在线时间</th>
     		<th>设备状态</th>
-    		<th>控制模式</th>
   		</tr>
 			</thead>
 			<tbody>
   		<tr ng-repeat=" device in devices">
     		<td>{{device.deviceId}}</td>
    		 	<td>{{device.deviceName}}</td>
-   		 	<td>{{device.apikey}}</td>
    		 	<td>{{device.deviceIspublic|isPublic}}</td>
    		 	<td>{{device.deviceIsonline|isOnline}}</td>
    		 	<td>{{device.deviceTime}}分钟</td>
    		 	<td align="center"><button type="button" ng-click="reverseStatus(device.deviceId)" class="btn {{device.deviceStatue|startClass}} btn-xs">{{device.deviceStatue|startText}}</button></td>
-   		 	<td>控制模式</td>
   		</tr>
 			</tbody>
          </table>

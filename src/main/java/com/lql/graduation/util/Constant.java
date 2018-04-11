@@ -16,7 +16,7 @@ public interface  Device{
 public interface aliDevice{
 
     //产品的ID名称
-    String PRODUCT_KEY = "jqLf0X9GFja";
+    String PRODUCT_KEY = "device";
     String ACCESS_KEY = "LTAInnUiYQ9Ty7Yk";
     String ACCESS_SCREAT = "zevYTuE0hjyLp9oqUmmIJ6r7Hb2W3F";
     //默认的消息队列名称
